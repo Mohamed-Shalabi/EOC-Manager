@@ -55,9 +55,9 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  void sendHeightToBluetooth() {
+  void sendHeightsToBluetooth() {
     if (heightFormKey.currentState?.validate() ?? false) {
-      final chairHeight = ErgonomicHeightCalculator.calculate(
+      ErgonomicHeightCalculator.calculateHeights(
         int.parse(heightFormController.text.trim()),
       );
     }

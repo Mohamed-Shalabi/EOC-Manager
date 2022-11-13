@@ -105,7 +105,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 TextButton(
-                  onPressed: viewModel.sendHeightToBluetooth,
+                  onPressed: viewModel.sendHeightsToBluetooth,
                   child: const Text(
                     'Send',
                     style: TextStyle(fontSize: 24),

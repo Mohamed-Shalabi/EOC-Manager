@@ -1,27 +1,38 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:typed_data';
+import 'dart:developer';
 
 import 'package:ergonomic_office_chair_manager/core/bluetooth/bluetooth_connector_interface.dart';
 import 'package:ergonomic_office_chair_manager/core/bluetooth/bluetooth_device_model.dart';
+import 'package:ergonomic_office_chair_manager/core/functions/string_to_u_int_8_list.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 
-class FlutterBluetoothSerialConnector implements BluetoothConnectorInterface {
+class FlutterSerialBluetoothConnector extends BluetoothConnectorInterface {
   late BluetoothConnection bluetoothConnector;
-  final StreamController<BluetoothState> _connectionStatusStreamController =
-      StreamController<BluetoothState>();
+  final StreamController<bool> _isConnectedStreamController =
+      StreamController<bool>();
 
-  FlutterBluetoothSerialConnector() {
-    FlutterBluetoothSerial.instance.onStateChanged().listen((event) {
-      _connectionStatusStreamController.add(event);
-    });
+  FlutterSerialBluetoothConnector() {
+    Timer.periodic(
+      const Duration(milliseconds: 300),
+      (timer) {
+        try {
+          final isConnected = bluetoothConnector.isConnected;
+          _isConnectedStreamController.add(isConnected);
+        } catch (_) {
+          _isConnectedStreamController.add(false);
+        }
+      },
+    );
   }
 
   @override
   Stream<bool> get isConnectedStream {
-    return _connectionStatusStreamController.stream.map(
-      (event) => event.isEnabled,
-    );
+    return _isConnectedStreamController.stream.asBroadcastStream();
+  }
+
+  @override
+  Future<bool> get isEnabled async {
+    return await FlutterBluetoothSerial.instance.isEnabled ?? false;
   }
 
   @override
@@ -37,7 +48,7 @@ class FlutterBluetoothSerialConnector implements BluetoothConnectorInterface {
   }
 
   @override
-  Future<bool> disconnect(BluetoothDeviceModel bluetoothDevice) async {
+  Future<bool> disconnect() async {
     try {
       await bluetoothConnector.finish();
       return true;
@@ -61,7 +72,7 @@ class FlutterBluetoothSerialConnector implements BluetoothConnectorInterface {
 
   @override
   void send(String message) {
-    final uint8List = Uint8List.fromList(utf8.encode(message));
-    bluetoothConnector.output.add(uint8List);
+    log(message.toUInt8List.toString());
+    bluetoothConnector.output.add(message.toUInt8List);
   }
 }

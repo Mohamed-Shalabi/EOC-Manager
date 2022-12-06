@@ -29,9 +29,21 @@ class ViewBluetoothDevicesDialog extends StatelessWidget {
             final homeCubit = context.read<HomeCubit>();
             final bluetoothDevices = homeCubit.bluetoothDevices;
 
-            if (state is BluetoothConnectingState) {
+            if (homeCubit.isConnectionLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
+              );
+            }
+
+            if (bluetoothDevices.isEmpty) {
+              return const Center(
+                child: Text(
+                  'Did not find any devices',
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.red,
+                  ),
+                ),
               );
             }
 

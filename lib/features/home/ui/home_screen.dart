@@ -17,12 +17,41 @@ class HomeScreen extends StatelessWidget {
       ),
       body: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {
+          if (state is HomeLastSessionGotState) {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  content: Text(
+                    'Last height was ${state.height}, do you want to send it now?',
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text('Yes'),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text('No'),
+                    ),
+                  ],
+                );
+              },
+            );
+          }
+
           if (state is HomeGetBluetoothDevicesFailedState) {
             context.showSnackBar('Failed to connect');
           }
 
           if (state is BluetoothSendDataFailedState) {
             context.showSnackBar(state.message);
+          }
+
+          if (state is BluetoothConnectionFailedState) {
+            if (state.hasMessage) {
+              context.showSnackBar(state.message);
+            }
           }
         },
         builder: (context, state) {
@@ -60,48 +89,57 @@ class HomeScreen extends StatelessWidget {
               ),
               SizedBox(height: context.screenHeight * 0.2),
               TextButton(
-                onPressed: () {
-                  context.read<HomeCubit>().getBluetoothDevices();
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return const SimpleDialog(
-                        title: ViewBluetoothDevicesDialog(),
-                      );
-                    },
-                  );
-                },
-                child: const Text(
-                  'Select Device',
-                  style: TextStyle(fontSize: 24),
+                onPressed: viewModel.isConnected
+                    ? viewModel.disconnect
+                    : () async {
+                        final homeCubit = context.read<HomeCubit>();
+                        await homeCubit.getBluetoothDevices();
+                        if (await homeCubit.isBluetoothEnabled) {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const SimpleDialog(
+                                title: ViewBluetoothDevicesDialog(),
+                              );
+                            },
+                          );
+                        }
+                      },
+                child: Text(
+                  viewModel.isConnected ? 'Disconnect' : 'Select Device',
+                  style: const TextStyle(fontSize: 24),
                 ),
               ),
               if (viewModel.isConnected) ...[
-                SizedBox(height: context.screenHeight * 0.2),
-                Form(
-                  child: TextFormField(
-                    controller: viewModel.heightFormController,
-                    decoration: InputDecoration(
-                      hintText: 'Enter your height in English Letters',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
+                SizedBox(height: context.screenHeight * 0.1),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Form(
+                    key: viewModel.heightFormKey,
+                    child: TextFormField(
+                      controller: viewModel.heightFormController,
+                      decoration: InputDecoration(
+                        hintText: 'Enter your height in English Letters',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
-                    ),
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      final intValue = int.tryParse(value?.trim() ?? '');
-                      if (intValue == null) {
-                        return 'Write a correct number';
-                      } else if (!ErgonomicHeightCalculator.isInsideRange(
-                        intValue,
-                      )) {
-                        return 'Write a number between '
-                            '${ErgonomicHeightCalculator.minUserHeight} '
-                            'and ${ErgonomicHeightCalculator.maxUserHeight}';
-                      }
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        final intValue = int.tryParse(value?.trim() ?? '');
+                        if (intValue == null) {
+                          return 'Write a correct number';
+                        } else if (!ErgonomicHeightCalculator.isInsideRange(
+                          intValue,
+                        )) {
+                          return 'Write a number between '
+                              '${ErgonomicHeightCalculator.minUserHeight} '
+                              'and ${ErgonomicHeightCalculator.maxUserHeight}';
+                        }
 
-                      return null;
-                    },
+                        return null;
+                      },
+                    ),
                   ),
                 ),
                 TextButton(

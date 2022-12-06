@@ -7,9 +7,9 @@ abstract class ErgonomicHeightCalculator {
     return height >= minUserHeight && height <= maxUserHeight;
   }
 
-  static ErgonomicHeightModel? calculateHeights(int userHeightInCm) {
+  static ErgonomicHeightModel calculateHeights(int userHeightInCm) {
     if (!isInsideRange(userHeightInCm)) {
-      return null;
+      throw 'Outside range';
     }
 
     return _heights

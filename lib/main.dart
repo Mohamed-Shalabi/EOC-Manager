@@ -1,12 +1,14 @@
 import 'package:ergonomic_office_chair_manager/core/bluetooth/flutter_bluetooth_serial_connector.dart';
 import 'package:ergonomic_office_chair_manager/core/local/shared_preferences_storage_key_value_saver.dart';
-import 'package:ergonomic_office_chair_manager/features/home/blocs/home_cubit.dart';
-import 'package:ergonomic_office_chair_manager/features/home/data/home_repo.dart';
-import 'package:ergonomic_office_chair_manager/features/home/ui/home_screen.dart';
+import 'package:ergonomic_office_chair_manager/features/home/data/reoisitories/home_repository_impl.dart';
+import 'package:ergonomic_office_chair_manager/features/home/presentation/blocs/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'features/home/presentation/ui/home_screen.dart';
+
+// TODO: Make deviceId as a class
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -26,8 +28,11 @@ class ErgonomicOfficeChairApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => HomeCubit(
         bluetoothConnector: FlutterSerialBluetoothConnector(),
-        homeRepo: HomeRepo(
-          SharedPreferencesStorageKeyValueSaver(sharedPreferences),
+        homeRepo: HomeRepositoryImpl(
+          storageKeyValueSaver: SharedPreferencesStorageKeyValueSaver(
+            sharedPreferences,
+          ),
+          bluetoothConnector: FlutterSerialBluetoothConnector(),
         ),
       ),
       child: const MaterialApp(

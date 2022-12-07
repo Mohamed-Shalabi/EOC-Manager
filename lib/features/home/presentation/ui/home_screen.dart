@@ -1,8 +1,7 @@
 import 'package:ergonomic_office_chair_manager/core/functions/media_query_utils.dart';
 import 'package:ergonomic_office_chair_manager/core/functions/show_snack_bar.dart';
-import 'package:ergonomic_office_chair_manager/features/home/blocs/home_cubit.dart';
-import 'package:ergonomic_office_chair_manager/features/home/data/ergonomic_calculator.dart';
-import 'package:ergonomic_office_chair_manager/features/home/ui/view_bluetooth_devices_dialog.dart';
+import 'package:ergonomic_office_chair_manager/features/home/presentation/blocs/home_cubit.dart';
+import 'package:ergonomic_office_chair_manager/features/home/presentation/ui/view_bluetooth_devices_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,52 +15,8 @@ class HomeScreen extends StatelessWidget {
         title: const Text('Home'),
       ),
       body: BlocConsumer<HomeCubit, HomeState>(
-        listener: (context, state) {
-          if (state is HomeLastSessionGotState) {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  content: Text(
-                    'Last height was ${state.height}, do you want to send it now?',
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text('Yes'),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text('No'),
-                    ),
-                  ],
-                );
-              },
-            );
-          }
-
-          if (state is HomeGetBluetoothDevicesFailedState) {
-            context.showSnackBar('Failed to connect');
-          }
-
-          if (state is BluetoothSendDataFailedState) {
-            context.showSnackBar(state.message);
-          }
-
-          if (state is BluetoothConnectionFailedState) {
-            if (state.hasMessage) {
-              context.showSnackBar(state.message);
-            }
-          }
-        },
+        listener: (context, state) {},
         builder: (context, state) {
-          if (state is HomeGetBluetoothDevicesLoadingState ||
-              state is BluetoothSendDataLoadingState) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
           final viewModel = context.read<HomeCubit>();
 
           return ListView(
@@ -90,7 +45,7 @@ class HomeScreen extends StatelessWidget {
               SizedBox(height: context.screenHeight * 0.2),
               TextButton(
                 onPressed: viewModel.isConnected
-                    ? viewModel.disconnect
+                    ? viewModel.disconnectDevice
                     : () async {
                         final homeCubit = context.read<HomeCubit>();
                         await homeCubit.getBluetoothDevices();
@@ -155,6 +110,29 @@ class HomeScreen extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  void showLastSessionDialog(BuildContext context, int height) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: Text(
+            'Last height was $height, do you want to send it now?',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {},
+              child: const Text('Yes'),
+            ),
+            TextButton(
+              onPressed: () {},
+              child: const Text('No'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

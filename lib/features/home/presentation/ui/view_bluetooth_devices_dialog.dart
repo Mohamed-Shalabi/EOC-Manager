@@ -1,7 +1,7 @@
 import 'package:ergonomic_office_chair_manager/core/functions/media_query_utils.dart';
 import 'package:ergonomic_office_chair_manager/core/functions/navigate.dart';
 import 'package:ergonomic_office_chair_manager/core/functions/show_snack_bar.dart';
-import 'package:ergonomic_office_chair_manager/features/home/blocs/home_cubit.dart';
+import 'package:ergonomic_office_chair_manager/features/home/presentation/blocs/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

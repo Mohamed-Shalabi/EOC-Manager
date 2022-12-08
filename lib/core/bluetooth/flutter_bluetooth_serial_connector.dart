@@ -72,7 +72,6 @@ class FlutterSerialBluetoothConnector extends BluetoothConnectorInterface {
 
   @override
   void send(String message) {
-    log(message.toUInt8List.toString());
     bluetoothConnector.output.add(message.toUInt8List);
   }
 }

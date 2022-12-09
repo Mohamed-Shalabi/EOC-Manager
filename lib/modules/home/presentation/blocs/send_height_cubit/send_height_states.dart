@@ -7,4 +7,8 @@ class SendHeightInitialState extends SendHeightStates {}
 
 class SendHeightSuccessState extends SendHeightStates {}
 
-class SendHeightFailedState extends SendHeightStates {}
+class SendHeightFailedState extends SendHeightStates {
+  final String message;
+
+  SendHeightFailedState({required this.message});
+}

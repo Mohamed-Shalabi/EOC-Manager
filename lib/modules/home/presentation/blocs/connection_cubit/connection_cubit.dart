@@ -85,8 +85,10 @@ class ConnectionCubit extends Cubit<ConnectionStates> {
   void getDevices() async {
     final devicesResult = await _getDevicesUseCase();
     devicesResult.fold<void>(
-      (failure) => emit(ConnectionGetDevicesSuccessState()),
-      (devices) => emit(ConnectionGetDevicesFailedState()),
+      (failure) => emit(
+        ConnectionGetDevicesFailedState(message: failure.message),
+      ),
+      (devices) => emit(ConnectionGetDevicesSuccessState()),
     );
   }
 
@@ -105,9 +107,9 @@ class ConnectionCubit extends Cubit<ConnectionStates> {
     isConnectionLoading = false;
 
     connectionResult.fold<void>(
-      (failure) {
-        emit(ConnectionConnectingFailedState());
-      },
+      (failure) => emit(
+        ConnectionConnectingFailedState(message: failure.message),
+      ),
       (_) {
         _updateIsConnected(true);
         emit(ConnectionConnectingDoneState());
@@ -127,7 +129,9 @@ class ConnectionCubit extends Cubit<ConnectionStates> {
     );
 
     disconnectionResult.fold<void>(
-      (failure) => emit(DisconnectionFailedState()),
+      (failure) => emit(
+        DisconnectionFailedState(message: failure.message),
+      ),
       (_) {
         _updateIsConnected(false);
         emit(DisconnectionSuccessState());

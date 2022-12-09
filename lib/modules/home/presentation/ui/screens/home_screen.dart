@@ -60,7 +60,11 @@ class HomeScreen extends StatelessWidget {
     }
 
     if (state is ConnectionConnectingFailedState) {
-      context.showSnackBar(AppStrings.couldNotConnect);
+      context.showSnackBar(state.message);
+    }
+
+    if (state is DisconnectionFailedState) {
+      context.showSnackBar(state.message);
     }
 
     if (state is ConnectionAlreadyConnectedState) {
@@ -72,7 +76,7 @@ class HomeScreen extends StatelessWidget {
     }
 
     if (state is ConnectionGetDevicesFailedState) {
-      context.showSnackBar(AppStrings.couldNotGetDevices);
+      context.showSnackBar(state.message);
     }
   }
 
@@ -82,7 +86,7 @@ class HomeScreen extends StatelessWidget {
     }
 
     if (state is SendHeightFailedState) {
-      context.showSnackBar(AppStrings.couldNotSend);
+      context.showSnackBar(state.message);
     }
   }
 }

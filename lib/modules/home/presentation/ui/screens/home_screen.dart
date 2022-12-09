@@ -7,6 +7,7 @@ import 'package:ergonomic_office_chair_manager/modules/home/presentation/ui/widg
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/utils/app_strings.dart';
 import '../widgets/connection_status_widget.dart';
 import '../widgets/send_height_button.dart';
 
@@ -23,7 +24,7 @@ class HomeScreen extends StatelessWidget {
           final connectionViewModel = context.read<ConnectionCubit>();
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Home'),
+              title: const Text(AppStrings.home),
             ),
             body: ListView(
               children: [
@@ -55,33 +56,33 @@ class HomeScreen extends StatelessWidget {
 
   void _onConnectionEvent(BuildContext context, ConnectionStates state) {
     if (state is ConnectionConnectingDoneState) {
-      context.showSnackBar('Connected Successfully');
+      context.showSnackBar(AppStrings.connectedSuccessfully);
     }
 
     if (state is ConnectionConnectingFailedState) {
-      context.showSnackBar('Could not connect');
+      context.showSnackBar(AppStrings.couldNotConnect);
     }
 
     if (state is ConnectionAlreadyConnectedState) {
-      context.showSnackBar('Already connected');
+      context.showSnackBar(AppStrings.alreadyConnected);
     }
 
     if (state is ConnectionAlreadyNotConnectedState) {
-      context.showSnackBar('Already not connected');
+      context.showSnackBar(AppStrings.alreadyNotConnected);
     }
 
     if (state is ConnectionGetDevicesFailedState) {
-      context.showSnackBar('Could not get devices');
+      context.showSnackBar(AppStrings.couldNotGetDevices);
     }
   }
 
   void _onSendHeightEvent(BuildContext context, SendHeightStates state) {
     if (state is SendHeightSuccessState) {
-      context.showSnackBar('Send Successfully');
+      context.showSnackBar(AppStrings.sentSuccessfully);
     }
 
     if (state is SendHeightFailedState) {
-      context.showSnackBar('Could not send data');
+      context.showSnackBar(AppStrings.couldNotSend);
     }
   }
 }

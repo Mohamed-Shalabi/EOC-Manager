@@ -12,6 +12,7 @@ import 'package:ergonomic_office_chair_manager/modules/home/domain/entities/send
 import 'package:ergonomic_office_chair_manager/modules/home/domain/repositories/home_repository.dart';
 
 import '../../../../core/error/failure.dart';
+import '../../../../core/utils/app_strings.dart';
 import '../../domain/entities/can_connect_entity.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
@@ -40,10 +41,10 @@ class HomeRepositoryImpl implements HomeRepository {
         return Right(CanConnectEntity());
       }
 
-      throw 'Could not connect';
+      throw AppStrings.couldNotConnect;
     } catch (e) {
       final String message =
-          e is String ? e : 'Could not check bluetooth status';
+          e is String ? e : AppStrings.couldNotCheckBluetoothStatus;
       return Left(Failure(message: message));
     }
   }
@@ -65,7 +66,7 @@ class HomeRepositoryImpl implements HomeRepository {
       final bluetoothDevices = await _bluetoothDataSource.getBluetoothDevices();
       return Right(bluetoothDevices.map((e) => e.toEntity()).toList());
     } catch (_) {
-      return Left(Failure(message: 'Could not get devices'));
+      return Left(Failure(message: AppStrings.couldNotGetDevices));
     }
   }
 
@@ -79,9 +80,9 @@ class HomeRepositoryImpl implements HomeRepository {
         return Right(ConnectionStateEntity.connected());
       }
 
-      throw 'Could not connect';
+      throw AppStrings.couldNotConnect;
     } catch (_) {
-      return Left(Failure(message: 'Could not connect'));
+      return Left(Failure(message: AppStrings.couldNotConnect));
     }
   }
 
@@ -91,7 +92,7 @@ class HomeRepositoryImpl implements HomeRepository {
     if (!isHeightInRange) {
       return Left(
         Failure(
-          message: 'Height is not in range '
+          message: '${AppStrings.heightNotInRange} '
               '(${ErgonomicHeightsDataSource.minUserHeight}, '
               '${ErgonomicHeightsDataSource.maxUserHeight})',
         ),
@@ -116,9 +117,9 @@ class HomeRepositoryImpl implements HomeRepository {
         return Right(ConnectionStateEntity.disconnected());
       }
 
-      throw 'Could not disconnect';
+      throw AppStrings.couldNotDisconnect;
     } catch (_) {
-      return Left(Failure(message: 'Could not disconnect'));
+      return Left(Failure(message: AppStrings.couldNotDisconnect));
     }
   }
 
@@ -133,9 +134,9 @@ class HomeRepositoryImpl implements HomeRepository {
         return Right(SaveSessionDoneEntity());
       }
 
-      throw 'could not save session';
+      throw AppStrings.couldNotSaveSession;
     } catch (_) {
-      return Left(Failure(message: 'could not save session'));
+      return Left(Failure(message: AppStrings.couldNotSaveSession));
     }
   }
 

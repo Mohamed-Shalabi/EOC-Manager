@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/utils/app_strings.dart';
 import '../../../domain/use_cases/send_height_use_case.dart';
 
 part 'send_height_states.dart';
@@ -36,7 +37,7 @@ class SendHeightCubit extends Cubit<SendHeightStates> {
   String? validateHeightInput(String? value) {
     final height = int.tryParse(value ?? '');
     if (height == null) {
-      return 'Enter an English number';
+      return AppStrings.heightFieldHintMessage;
     }
 
     return null;

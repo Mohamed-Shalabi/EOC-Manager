@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../core/components/my_text.dart';
+import '../../../../../core/utils/app_strings.dart';
+
 void showLastSessionDialog(BuildContext context, int height) {
   showDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
         content: Text(
-          'Last height was $height, do you want to send it now?',
+          AppStrings.getLastSessionMessage(height),
         ),
         actions: [
           TextButton(
             onPressed: () {},
-            child: const Text('Yes'),
+            child: const MyText(AppStrings.yes),
           ),
           TextButton(
             onPressed: () {},
-            child: const Text('No'),
+            child: const MyText(AppStrings.no),
           ),
         ],
       );

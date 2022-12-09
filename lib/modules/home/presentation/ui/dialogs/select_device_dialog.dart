@@ -1,7 +1,11 @@
 import 'package:ergonomic_office_chair_manager/core/functions/media_query_utils.dart';
+import 'package:ergonomic_office_chair_manager/core/utils/app_strings.dart';
+import 'package:ergonomic_office_chair_manager/core/utils/app_text_styles.dart';
 import 'package:ergonomic_office_chair_manager/modules/home/presentation/blocs/connection_cubit/connection_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../core/components/my_text.dart';
 
 void showSelectDeviceDialog(BuildContext context) {
   showDialog(
@@ -30,12 +34,9 @@ class _ViewDevicesDialog extends StatelessWidget {
 
     if (devices.isEmpty) {
       return const Center(
-        child: Text(
-          'Did not find any devices',
-          style: TextStyle(
-            fontSize: 24,
-            color: Colors.red,
-          ),
+        child: MyText(
+          AppStrings.didNotFindDevices,
+          style: AppTextStyles.warningStyle,
         ),
       );
     }
@@ -49,8 +50,8 @@ class _ViewDevicesDialog extends StatelessWidget {
           itemBuilder: (context, index) {
             final device = devices[index];
             return ListTile(
-              title: Text(device.name),
-              subtitle: Text(device.id),
+              title: MyText(device.name),
+              subtitle: MyText(device.id),
               onTap: () => connectionCubit.connectToDevice(device.id),
             );
           },

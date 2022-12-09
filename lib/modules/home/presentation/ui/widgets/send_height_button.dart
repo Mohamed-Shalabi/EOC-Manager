@@ -1,6 +1,10 @@
-import 'package:ergonomic_office_chair_manager/modules/home/presentation/blocs/send_height_cubit/send_height_cubit.dart';
+import 'package:ergonomic_office_chair_manager/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../core/components/my_text.dart';
+import '../../../../../core/utils/app_strings.dart';
+import '../../blocs/send_height_cubit/send_height_cubit.dart';
 
 class SendHeightButton extends StatelessWidget {
   const SendHeightButton({Key? key}) : super(key: key);
@@ -11,9 +15,9 @@ class SendHeightButton extends StatelessWidget {
 
     return TextButton(
       onPressed: sendHeightViewModel.sendHeight,
-      child: const Text(
-        'Send',
-        style: TextStyle(fontSize: 24),
+      child: const MyText(
+        AppStrings.send,
+        style: AppTextStyles.buttonStyle,
       ),
     );
   }

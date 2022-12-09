@@ -2,6 +2,8 @@ import 'package:ergonomic_office_chair_manager/modules/home/presentation/blocs/s
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/utils/app_strings.dart';
+
 class UserHeightForm extends StatelessWidget {
   const UserHeightForm({Key? key}) : super(key: key);
 
@@ -14,7 +16,7 @@ class UserHeightForm extends StatelessWidget {
       child: TextFormField(
         controller: sendHeightViewModel.userHeightTextController,
         decoration: InputDecoration(
-          hintText: 'Enter your height in English Letters',
+          hintText: AppStrings.heightFieldHintMessage,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
           ),

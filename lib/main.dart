@@ -4,6 +4,7 @@ import 'package:ergonomic_office_chair_manager/modules/home/presentation/blocs/s
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'core/utils/app_strings.dart';
 import 'modules/home/presentation/ui/screens/home_screen.dart';
 
 // TODO: Make deviceId as a class
@@ -21,7 +22,7 @@ class ErgonomicOfficeChairApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Ergonomic Office Chair Manager App',
+      title: AppStrings.appName,
       debugShowCheckedModeBanner: false,
       home: MultiBlocProvider(
         providers: [

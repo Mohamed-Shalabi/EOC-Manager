@@ -31,3 +31,7 @@ void _throwIfTypeNotSupported<Type>() {
     throw 'Type must be specified';
   }
 }
+
+abstract class StorageKeys {
+  static const saveSessionKey = 'save_session';
+}

@@ -8,12 +8,14 @@ class SessionDataSource {
 
   Future<bool> saveSession(int userHeightInCm) {
     return _storageKeyValueSaver.saveData<int>(
-      key: 'key',
+      key: StorageKeys.saveSessionKey,
       value: userHeightInCm,
     );
   }
 
   Future<int?> getSavedSession() {
-    return _storageKeyValueSaver.getData<int>(key: 'key');
+    return _storageKeyValueSaver.getData<int>(
+      key: StorageKeys.saveSessionKey,
+    );
   }
 }

@@ -17,7 +17,10 @@ class SelectDeviceButton extends StatelessWidget {
     return TextButton(
       onPressed: connectionViewModel.isConnected
           ? connectionViewModel.disconnectDevice
-          : () => showSelectDeviceDialog(context),
+          : () => showSelectDeviceDialog(
+                context,
+                connectionCubit: connectionViewModel,
+              ),
       child: MyText(
         connectionViewModel.isConnected
             ? AppStrings.disconnect

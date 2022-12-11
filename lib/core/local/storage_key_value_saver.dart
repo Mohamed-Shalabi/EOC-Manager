@@ -1,16 +1,19 @@
 import 'package:meta/meta.dart';
 
 abstract class StorageKeyValueSaver {
+  @nonVirtual
   Future<bool> saveData<Type>({required String key, required Type value}) {
     _throwIfTypeNotSupported<Type>();
     return saveValidData(key: key, value: value);
   }
 
+  @nonVirtual
   Future<bool> deleteData<Type>({required String key}) {
     _throwIfTypeNotSupported<Type>();
     return deleteValidData(key: key);
   }
 
+  @nonVirtual
   Future<Type?> getData<Type>({required String key}) {
     _throwIfTypeNotSupported<Type>();
     return getValidData(key: key);

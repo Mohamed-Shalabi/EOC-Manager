@@ -7,12 +7,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/components/my_text.dart';
 
-void showSelectDeviceDialog(BuildContext context) {
+void showSelectDeviceDialog(
+  BuildContext context, {
+  required ConnectionCubit connectionCubit,
+}) {
   showDialog(
     context: context,
     builder: (context) {
-      return const SimpleDialog(
-        title: _ViewDevicesDialog(),
+      return BlocProvider.value(
+        value: connectionCubit,
+        child: const SimpleDialog(
+          title: _ViewDevicesDialog(),
+        ),
       );
     },
   );

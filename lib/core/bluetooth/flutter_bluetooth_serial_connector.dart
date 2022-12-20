@@ -31,7 +31,7 @@ class FlutterSerialBluetoothConnector extends BluetoothConnectorInterface {
   }
 
   @override
-  Future<bool> get isEnabled async {
+  Future<bool> get isEnabledOverridden async {
     return await FlutterBluetoothSerial.instance.isEnabled ?? false;
   }
 

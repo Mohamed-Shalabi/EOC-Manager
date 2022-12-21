@@ -22,6 +22,7 @@ abstract class AppStrings {
       'Could not check bluetooth status';
   static const heightNotInRange = 'Height is not in range';
   static const couldNotSaveSession = 'could not save session';
+  static const bluetoothNotEnabled = 'Bluetooth is not enabled';
 
   static String getLastSessionMessage(int height) {
     return 'Last height was $height, do you want to send it now?';

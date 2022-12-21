@@ -1,15 +1,15 @@
-import 'package:ergonomic_office_chair_manager/core/bluetooth/bluetooth_connector_interface.dart';
-import 'package:ergonomic_office_chair_manager/core/business/use_case.dart';
-import 'package:ergonomic_office_chair_manager/modules/home/domain/entities/connection_state_entity.dart';
-import 'package:ergonomic_office_chair_manager/modules/home/domain/entities/connection_state_entity.dart';
-import 'package:ergonomic_office_chair_manager/modules/home/domain/repositories/home_repository.dart';
+import '../../../../core/business/use_case.dart';
+import '../entities/connection_state_entity.dart';
+import '../repositories/connection_stream_respository.dart';
 
 class ConnectionStreamUseCase
-    implements UseCase<Stream<ConnectionStateEntity>, ConnectionStreamUseCaseParameters> {
-  final HomeRepository _repository;
+    implements
+        UseCase<Stream<ConnectionStateEntity>,
+            ConnectionStreamUseCaseParameters> {
+  final ConnectionStreamRepository _repository;
 
   ConnectionStreamUseCase({
-    required HomeRepository repository,
+    required ConnectionStreamRepository repository,
   }) : _repository = repository;
 
   @override

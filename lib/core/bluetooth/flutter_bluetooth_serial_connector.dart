@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'dart:developer';
 
-import 'package:ergonomic_office_chair_manager/core/bluetooth/bluetooth_connector_interface.dart';
-import 'package:ergonomic_office_chair_manager/core/bluetooth/bluetooth_device_model.dart';
-import 'package:ergonomic_office_chair_manager/core/functions/string_to_u_int_8_list.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
+
+import 'bluetooth_connector_interface.dart';
+import 'bluetooth_device_model.dart';
+import '../functions/string_to_u_int_8_list.dart';
 
 class FlutterSerialBluetoothConnector extends BluetoothConnectorInterface {
   late BluetoothConnection bluetoothConnector;

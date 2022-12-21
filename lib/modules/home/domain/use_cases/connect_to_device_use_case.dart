@@ -1,24 +1,29 @@
 import 'package:dartz/dartz.dart';
-import 'package:ergonomic_office_chair_manager/core/business/use_case.dart';
-import 'package:ergonomic_office_chair_manager/modules/home/domain/entities/connection_state_entity.dart';
 
+import '../../../../core/business/use_case.dart';
 import '../../../../core/error/failure.dart';
-import '../repositories/home_repository.dart';
+import '../repositories/connect_to_device_repository.dart';
 
 class ConnectToDeviceUseCase
     implements
-        UseCase<Future<Either<Failure, ConnectionStateEntity>>,
+        UseCase<Future<Either<Failure, void>>,
             ConnectToDeviceUseCaseParameters> {
-  final HomeRepository _repository;
+  final ConnectToDeviceRepository _repository;
 
   ConnectToDeviceUseCase({
-    required HomeRepository repository,
+    required ConnectToDeviceRepository repository,
   }) : _repository = repository;
 
   @override
-  Future<Either<Failure, ConnectionStateEntity>> call(
+  Future<Either<Failure, void>> call(
     ConnectToDeviceUseCaseParameters params,
-  ) {
+  ) async {
+    final isEnabledResult = await _repository.isEnabled;
+    final isDeviceEnabled = (isEnabledResult).isRight();
+    if (!isDeviceEnabled) {
+      return Left((isEnabledResult as Left<Failure, void>).value);
+    }
+
     return _repository.connect(params.deviceId);
   }
 }

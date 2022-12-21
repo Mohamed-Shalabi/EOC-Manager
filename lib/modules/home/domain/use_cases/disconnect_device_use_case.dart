@@ -1,31 +1,28 @@
 import 'package:dartz/dartz.dart';
-import 'package:ergonomic_office_chair_manager/core/business/use_case.dart';
-import 'package:ergonomic_office_chair_manager/modules/home/domain/entities/connection_state_entity.dart';
-import 'package:ergonomic_office_chair_manager/modules/home/domain/entities/connection_state_entity.dart';
-import 'package:ergonomic_office_chair_manager/modules/home/domain/repositories/home_repository.dart';
 
+import '../../../../core/business/use_case.dart';
 import '../../../../core/error/failure.dart';
+import '../repositories/disconnect_device_repository.dart';
 
 class DisconnectDeviceUseCase
     implements
-        UseCase<Future<Either<Failure, ConnectionStateEntity>>,
+        UseCase<Future<Either<Failure, void>>,
             DisconnectDeviceUseCaseParameters> {
-  final HomeRepository _repository;
+  final DisconnectDeviceRepository _repository;
 
   DisconnectDeviceUseCase({
-    required HomeRepository repository,
+    required DisconnectDeviceRepository repository,
   }) : _repository = repository;
 
   @override
-  Future<Either<Failure, ConnectionStateEntity>> call(
-    DisconnectDeviceUseCaseParameters params,
-  ) {
-    return _repository.disconnect(params.deviceId);
+  Future<Either<Failure, void>> call([
+    DisconnectDeviceUseCaseParameters params =
+        const DisconnectDeviceUseCaseParameters(),
+  ]) {
+    return _repository.disconnect();
   }
 }
 
 class DisconnectDeviceUseCaseParameters extends UseCaseParameters {
-  final String deviceId;
-
-  DisconnectDeviceUseCaseParameters(this.deviceId);
+  const DisconnectDeviceUseCaseParameters() : super();
 }

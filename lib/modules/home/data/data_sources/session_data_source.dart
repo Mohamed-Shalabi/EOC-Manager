@@ -1,4 +1,4 @@
-import 'package:ergonomic_office_chair_manager/core/local/storage_key_value_saver.dart';
+import '../../../../core/local/storage_key_value_saver.dart';
 
 class SessionDataSource {
   final StorageKeyValueSaver _storageKeyValueSaver;

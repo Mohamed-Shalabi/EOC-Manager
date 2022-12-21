@@ -1,5 +1,6 @@
-import 'package:ergonomic_office_chair_manager/core/bluetooth/bluetooth_device_model.dart';
 import 'package:meta/meta.dart';
+
+import 'bluetooth_device_model.dart';
 
 abstract class BluetoothConnectorInterface {
   @protected

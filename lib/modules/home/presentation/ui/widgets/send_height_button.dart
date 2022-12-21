@@ -1,9 +1,9 @@
-import 'package:ergonomic_office_chair_manager/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/components/my_text.dart';
 import '../../../../../core/utils/app_strings.dart';
+import '../../../../../core/utils/app_text_styles.dart';
 import '../../blocs/send_height_cubit/send_height_cubit.dart';
 
 class SendHeightButton extends StatelessWidget {

@@ -1,17 +1,17 @@
 import 'package:dartz/dartz.dart';
-import 'package:ergonomic_office_chair_manager/core/business/use_case.dart';
-import 'package:ergonomic_office_chair_manager/modules/home/domain/entities/device_entity.dart';
-import 'package:ergonomic_office_chair_manager/modules/home/domain/repositories/home_repository.dart';
 
+import '../../../../core/business/use_case.dart';
 import '../../../../core/error/failure.dart';
+import '../entities/device_entity.dart';
+import '../repositories/get_devices_repository.dart';
 
 class GetDevicesUseCase
     implements
         UseCase<Future<Either<Failure, List<DeviceEntity>>>,
             GetDevicesUseCaseParameters> {
-  final HomeRepository _repository;
+  final GetDevicesRepository _repository;
 
-  GetDevicesUseCase({required HomeRepository repository})
+  GetDevicesUseCase({required GetDevicesRepository repository})
       : _repository = repository;
 
   @override
@@ -20,7 +20,7 @@ class GetDevicesUseCase
   ]) async {
     final canConnect = await _repository.canConnect();
     if (canConnect.isLeft()) {
-      return canConnect.map((r) => []);
+      return (canConnect as Left).value;
     }
 
     return _repository.getDevices();

@@ -1,3 +1,4 @@
+import 'package:ergonomic_office_chair_manager/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,6 +28,9 @@ class ErgonomicOfficeChairApp extends StatelessWidget {
     return MaterialApp(
       title: AppStrings.appName,
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: AppColors.purple,
+      ),
       home: MultiBlocProvider(
         providers: [
           BlocProvider(create: (_) => Injector.get<ConnectToDeviceCubit>()),

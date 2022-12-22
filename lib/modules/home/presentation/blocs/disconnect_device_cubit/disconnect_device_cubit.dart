@@ -12,7 +12,9 @@ class DisconnectDeviceCubit extends Cubit<DisconnectDeviceStates> {
 
   final DisconnectDeviceUseCase _disconnectDeviceUseCase;
 
-  void disconnectDevice() async {
+  Future<void> disconnectDevice() async {
+    emit(DisconnectDeviceLoadingState());
+
     final disconnectionResult = await _disconnectDeviceUseCase();
 
     disconnectionResult.fold<void>(

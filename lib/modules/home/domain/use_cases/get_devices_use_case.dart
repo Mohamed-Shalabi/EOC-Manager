@@ -20,7 +20,7 @@ class GetDevicesUseCase
   ]) async {
     final canConnect = await _repository.canConnect();
     if (canConnect.isLeft()) {
-      return (canConnect as Left).value;
+      return Left((canConnect as Left<Failure, void>).value);
     }
 
     return _repository.getDevices();

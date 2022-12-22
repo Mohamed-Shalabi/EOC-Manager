@@ -1,3 +1,4 @@
+import 'package:ergonomic_office_chair_manager/core/bluetooth/fake_bluetooth_connector.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -59,7 +60,7 @@ abstract class Injector {
     );
 
     _serviceLocator.registerLazySingleton<BluetoothConnectorInterface>(
-      () => FlutterSerialBluetoothConnector(),
+      () => FakeBluetoothConnector(),
     );
 
     // ---------------------- modules ----------------------

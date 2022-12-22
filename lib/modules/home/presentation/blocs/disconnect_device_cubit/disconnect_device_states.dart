@@ -4,7 +4,7 @@ abstract class DisconnectDeviceStates {}
 
 class DisconnectDeviceInitialState extends DisconnectDeviceStates {}
 
-class AlreadyDisconnectedState extends DisconnectDeviceStates {}
+class DisconnectDeviceLoadingState extends DisconnectDeviceStates {}
 
 class DisconnectionFailedState extends DisconnectDeviceStates {
   final String message;

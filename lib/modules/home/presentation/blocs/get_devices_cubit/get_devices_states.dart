@@ -2,7 +2,7 @@ part of 'get_devices_cubit.dart';
 
 abstract class GetDevicesStates {}
 
-class GetDevicesInitialState extends GetDevicesStates {}
+class GetDevicesIdleState extends GetDevicesStates {}
 
 class GetDevicesLoadingState extends GetDevicesStates {}
 

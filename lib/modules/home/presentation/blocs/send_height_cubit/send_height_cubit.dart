@@ -24,14 +24,16 @@ class SendHeightCubit extends Cubit<SendHeightStates> {
   int get _userHeight => int.parse(_userHeightTrimmedText);
 
   void sendHeight() async {
+    if (!(heightFormKey.currentState?.validate() ?? true)) {
+      return;
+    }
+
     final sendHeightResult = await _sendHeightUseCase(
       SendHeightUseCaseParameters(_userHeight),
     );
 
     sendHeightResult.fold(
-      (failure) => emit(
-        SendHeightFailedState(message: failure.message),
-      ),
+      (failure) => emit(SendHeightFailedState(message: failure.message)),
       (_) => emit(SendHeightSuccessState()),
     );
   }

@@ -9,15 +9,20 @@ class GetDevicesCubit extends Cubit<GetDevicesStates> {
   GetDevicesCubit({
     required GetDevicesUseCase getDevicesUseCase,
   })  : _getDevicesUseCase = getDevicesUseCase,
-        super(GetDevicesInitialState());
+        super(GetDevicesIdleState());
 
   final GetDevicesUseCase _getDevicesUseCase;
 
   void getDevices() async {
+    emit(GetDevicesLoadingState());
     final devicesResult = await _getDevicesUseCase();
     devicesResult.fold<void>(
       (failure) => emit(GetDevicesFailedState(message: failure.message)),
       (devices) => emit(GetDevicesSuccessState(devices: devices)),
     );
+  }
+
+  void resetState() {
+    emit(GetDevicesIdleState());
   }
 }

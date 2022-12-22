@@ -4,6 +4,7 @@ abstract class AppStrings {
   static const no = 'No';
   static const didNotFindDevices = 'Did not find any devices';
   static const home = 'Home';
+  static const eocManager = 'EOC Manager';
   static const connectedSuccessfully = 'Connected Successfully';
   static const couldNotConnect = 'Could not connect';
   static const couldNotDisconnect = 'Could not disconnect';
@@ -23,6 +24,7 @@ abstract class AppStrings {
   static const heightNotInRange = 'Height is not in range';
   static const couldNotSaveSession = 'could not save session';
   static const bluetoothNotEnabled = 'Bluetooth is not enabled';
+  static const dismiss = 'Dismiss';
 
   static String getLastSessionMessage(int height) {
     return 'Last height was $height, do you want to send it now?';

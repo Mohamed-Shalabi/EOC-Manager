@@ -15,53 +15,38 @@ abstract class ErgonomicHeightsDataSource {
 
   static const List<ErgonomicHeightModel> heights = [
     ErgonomicHeightModel(
-      userHeightInCm: 150,
-      chairHeightInCm: 35,
-      monitorHeightInCm: 104,
-    ),
-    ErgonomicHeightModel(
-      userHeightInCm: 155,
-      chairHeightInCm: 37,
-      monitorHeightInCm: 107,
-    ),
-    ErgonomicHeightModel(
-      userHeightInCm: 160,
-      chairHeightInCm: 38,
-      monitorHeightInCm: 110,
-    ),
-    ErgonomicHeightModel(
       userHeightInCm: 165,
-      chairHeightInCm: 40,
+      chairHeightInCm: 0,
       monitorHeightInCm: 115,
     ),
     ErgonomicHeightModel(
       userHeightInCm: 170,
-      chairHeightInCm: 41,
+      chairHeightInCm: 1,
       monitorHeightInCm: 118,
     ),
     ErgonomicHeightModel(
       userHeightInCm: 175,
-      chairHeightInCm: 43,
+      chairHeightInCm: 3,
       monitorHeightInCm: 122,
     ),
     ErgonomicHeightModel(
       userHeightInCm: 180,
-      chairHeightInCm: 44,
+      chairHeightInCm: 4,
       monitorHeightInCm: 125,
     ),
     ErgonomicHeightModel(
       userHeightInCm: 185,
-      chairHeightInCm: 46,
+      chairHeightInCm: 6,
       monitorHeightInCm: 129,
     ),
     ErgonomicHeightModel(
       userHeightInCm: 190,
-      chairHeightInCm: 48,
+      chairHeightInCm: 8,
       monitorHeightInCm: 132,
     ),
     ErgonomicHeightModel(
       userHeightInCm: 195,
-      chairHeightInCm: 49,
+      chairHeightInCm: 9,
       monitorHeightInCm: 138,
     ),
   ];

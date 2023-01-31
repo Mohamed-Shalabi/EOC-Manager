@@ -37,8 +37,8 @@ class SendHeightRepositoryImpl implements SendHeightRepository {
       );
     }
 
-    _bluetoothDataSource.send(chairHeight);
-    return Right(SendDoneEntity());
+    final sentMessage = _bluetoothDataSource.send(chairHeight);
+    return Right(SendDoneEntity(sentMessage));
   }
 
   bool _isChairHeightInsideRange(int chairHeight) {

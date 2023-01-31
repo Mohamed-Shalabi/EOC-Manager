@@ -34,7 +34,7 @@ class SendHeightCubit extends Cubit<SendHeightStates> {
 
     sendHeightResult.fold(
       (failure) => emit(SendHeightFailedState(message: failure.message)),
-      (_) => emit(SendHeightSuccessState()),
+      (entity) => emit(SendHeightSuccessState(entity.sentMessage)),
     );
   }
 

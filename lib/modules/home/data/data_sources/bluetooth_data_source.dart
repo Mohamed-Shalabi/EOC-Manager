@@ -37,8 +37,19 @@ class BluetoothDataSource {
     return isConnected;
   }
 
-  void send(int chairHeight) {
-    _bluetoothConnector.send('$chairHeight');
+  String send(int netChairHeight) {
+    if (netChairHeight > 11) {
+      netChairHeight = 11;
+    }
+
+    if (netChairHeight < 0) {
+      netChairHeight = 0;
+    }
+
+    final message = netChairHeight < 10 ? '0$netChairHeight' : '$netChairHeight';
+    _bluetoothConnector.send(message);
+    
+    return message;
   }
 
   Future<bool> disconnect() => _bluetoothConnector.disconnect();

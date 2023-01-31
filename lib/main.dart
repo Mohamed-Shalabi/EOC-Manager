@@ -1,4 +1,5 @@
 import 'package:ergonomic_office_chair_manager/core/utils/app_colors.dart';
+import 'package:ergonomic_office_chair_manager/modules/home/presentation/ui/listener.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -39,7 +40,7 @@ class ErgonomicOfficeChairApp extends StatelessWidget {
           BlocProvider(create: (_) => Injector.get<GetDevicesCubit>()),
           BlocProvider(create: (_) => Injector.get<SendHeightCubit>()),
         ],
-        child: const HomeScreen(),
+        child: const HomeListeners(child: HomeScreen()),
       ),
     );
   }

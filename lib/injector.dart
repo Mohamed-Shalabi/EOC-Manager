@@ -60,7 +60,7 @@ abstract class Injector {
     );
 
     _serviceLocator.registerLazySingleton<BluetoothConnectorInterface>(
-      () => FakeBluetoothConnector(),
+      () => FlutterSerialBluetoothConnector(),
     );
 
     // ---------------------- modules ----------------------

@@ -1,10 +1,12 @@
-import 'package:ergonomic_office_chair_manager/core/bluetooth/bluetooth_device_model.dart';
-import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
+
+import 'bluetooth_device_model.dart';
 
 abstract class BluetoothConnectorInterface {
   @protected
   Stream<bool> get isConnectedStream;
 
+  @nonVirtual
   Stream<bool> get isConnectedBroadcastStream {
     if (isConnectedStream.isBroadcast) {
       return isConnectedStream;
@@ -13,7 +15,17 @@ abstract class BluetoothConnectorInterface {
     throw 'stream must be broadcast';
   }
 
-  Future<bool> get isEnabled;
+  @nonVirtual
+  Future<bool> get isEnabled async {
+    try {
+      return isEnabledOverridden;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  @protected
+  Future<bool> get isEnabledOverridden;
 
   Future<List<BluetoothDeviceModel>> getBluetoothDevices();
 

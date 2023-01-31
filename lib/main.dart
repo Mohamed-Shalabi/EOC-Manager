@@ -1,39 +1,46 @@
-import 'package:ergonomic_office_chair_manager/core/bluetooth/flutter_bluetooth_serial_connector.dart';
-import 'package:ergonomic_office_chair_manager/core/local/shared_preferences_storage_key_value_saver.dart';
-import 'package:ergonomic_office_chair_manager/features/home/blocs/home_cubit.dart';
-import 'package:ergonomic_office_chair_manager/features/home/data/home_repo.dart';
-import 'package:ergonomic_office_chair_manager/features/home/ui/home_screen.dart';
+import 'package:ergonomic_office_chair_manager/core/utils/app_colors.dart';
+import 'package:ergonomic_office_chair_manager/modules/home/presentation/ui/listener.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
+import 'core/utils/app_strings.dart';
+import 'injector.dart';
+import 'modules/home/presentation/blocs/connect_to_device_cubit/connect_to_device_cubit.dart';
+import 'modules/home/presentation/blocs/connection_stream_cubit/connection_stream_cubit.dart';
+import 'modules/home/presentation/blocs/disconnect_device_cubit/disconnect_device_cubit.dart';
+import 'modules/home/presentation/blocs/get_devices_cubit/get_devices_cubit.dart';
+import 'modules/home/presentation/blocs/send_height_cubit/send_height_cubit.dart';
+import 'modules/home/presentation/ui/screens/home_screen.dart';
+
+// TODO: Make deviceId as a class
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final sharedPreferences = await SharedPreferences.getInstance();
+  await Injector.init();
 
-  runApp(ErgonomicOfficeChairApp(sharedPreferences: sharedPreferences));
+  runApp(const ErgonomicOfficeChairApp());
 }
 
 class ErgonomicOfficeChairApp extends StatelessWidget {
-  const ErgonomicOfficeChairApp({Key? key, required this.sharedPreferences})
-      : super(key: key);
-
-  final SharedPreferences sharedPreferences;
+  const ErgonomicOfficeChairApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => HomeCubit(
-        bluetoothConnector: FlutterSerialBluetoothConnector(),
-        homeRepo: HomeRepo(
-          SharedPreferencesStorageKeyValueSaver(sharedPreferences),
-        ),
+    return MaterialApp(
+      title: AppStrings.appName,
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: AppColors.purple,
       ),
-      child: const MaterialApp(
-        title: 'Ergonomic Office Chair Manager App',
-        debugShowCheckedModeBanner: false,
-        home: HomeScreen(),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => Injector.get<ConnectToDeviceCubit>()),
+          BlocProvider(create: (_) => Injector.get<ConnectionStreamCubit>()),
+          BlocProvider(create: (_) => Injector.get<DisconnectDeviceCubit>()),
+          BlocProvider(create: (_) => Injector.get<GetDevicesCubit>()),
+          BlocProvider(create: (_) => Injector.get<SendHeightCubit>()),
+        ],
+        child: const HomeListeners(child: HomeScreen()),
       ),
     );
   }

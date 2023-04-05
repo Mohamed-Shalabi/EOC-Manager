@@ -1,4 +1,5 @@
-import '../../../../../stateful_bloc/stateful_bloc.dart';
+import 'package:flutter_stateful_bloc/flutter_stateful_bloc.dart';
+
 import '../../../domain/entities/device_entity.dart';
 import '../../../domain/use_cases/get_devices_use_case.dart';
 import '../state_organizer.dart';

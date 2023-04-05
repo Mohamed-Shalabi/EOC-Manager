@@ -1,10 +1,10 @@
 import 'package:ergonomic_office_chair_manager/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stateful_bloc/flutter_stateful_bloc.dart';
 
 import 'core/utils/app_strings.dart';
 import 'injector.dart';
 import 'modules/home/presentation/ui/screens/home_screen.dart';
-import 'stateful_bloc/stateful_bloc.dart';
 
 // TODO: Make deviceId as a class
 void main() async {

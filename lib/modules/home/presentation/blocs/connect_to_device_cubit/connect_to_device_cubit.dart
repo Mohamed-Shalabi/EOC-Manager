@@ -1,4 +1,5 @@
-import '../../../../../stateful_bloc/stateful_bloc.dart';
+import 'package:flutter_stateful_bloc/flutter_stateful_bloc.dart';
+
 import '../../../domain/use_cases/connect_to_device_use_case.dart';
 import '../state_organizer.dart';
 import '../../ui/multi_state_organizer.dart';

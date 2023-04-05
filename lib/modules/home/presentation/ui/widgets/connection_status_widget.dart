@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_stateful_bloc/flutter_stateful_bloc.dart';
 
 import '../../../../../core/components/my_text.dart';
 import '../../../../../core/functions/media_query_utils.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../../../../../core/utils/app_text_styles.dart';
-import '../../../../../stateful_bloc/stateful_bloc.dart';
 import '../../blocs/connection_stream_cubit/connection_stream_cubit.dart';
 import '../../blocs/home_animations_cubit/home_animations_cubit.dart';
 import '../../blocs/state_organizer.dart';
@@ -17,7 +16,7 @@ class AnimatedConnectionStatusBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final animation =
-        context.read<HomeAnimationsCubit>().connectionStatusBannerAnimation;
+        context.readObject<HomeAnimationsCubit>().connectionStatusBannerAnimation;
 
     return AnimatedBuilder(
       animation: animation,

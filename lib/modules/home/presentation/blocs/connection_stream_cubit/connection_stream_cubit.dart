@@ -1,4 +1,4 @@
-import 'package:ergonomic_office_chair_manager/stateful_bloc/stateful_bloc.dart';
+import 'package:flutter_stateful_bloc/flutter_stateful_bloc.dart';
 
 import '../../../domain/use_cases/connection_stream_use_case.dart';
 import '../state_organizer.dart';

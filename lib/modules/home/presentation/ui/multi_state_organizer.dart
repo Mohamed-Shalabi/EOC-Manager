@@ -1,6 +1,5 @@
 import 'package:ergonomic_office_chair_manager/modules/home/domain/entities/device_entity.dart';
-
-import '../../../../stateful_bloc/stateful_bloc.dart';
+import 'package:flutter_stateful_bloc/flutter_stateful_bloc.dart';
 
 mixin BottomContainerStates implements SuperState {
   BottomContainerStatesEnum get state;

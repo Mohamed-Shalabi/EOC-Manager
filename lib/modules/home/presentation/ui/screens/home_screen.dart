@@ -1,13 +1,10 @@
 import 'dart:math';
-
 import 'package:ergonomic_office_chair_manager/core/functions/show_snack_bar.dart';
-import 'package:ergonomic_office_chair_manager/stateful_bloc/stateful_bloc.dart';
+import 'package:flutter_stateful_bloc/flutter_stateful_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/functions/media_query_utils.dart';
 import '../../../../../core/utils/app_strings.dart';
-import '../../../../../injector.dart';
 import '../../blocs/connect_to_device_cubit/connect_to_device_cubit.dart';
 import '../../blocs/connection_stream_cubit/connection_stream_cubit.dart';
 import '../../blocs/disconnect_device_cubit/disconnect_device_cubit.dart';
@@ -48,14 +45,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
+    return ObjectProvider(
       create: (_) => HomeAnimationsCubit(
         introductionAnimationController: introductionAnimationController,
         showDevicesAnimationController: showDevicesAnimationController,
       )..animateIntroduction(),
       child: Builder(
         builder: (context) {
-          final animationCubit = context.read<HomeAnimationsCubit>();
+          final animationCubit = context.readObject<HomeAnimationsCubit>();
 
           final showDevicesAnimation = animationCubit.showDevicesAnimation;
 

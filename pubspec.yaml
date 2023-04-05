@@ -15,13 +15,12 @@ dependencies:
 
 
   cupertino_icons: ^1.0.2
-  flutter_bloc: ^8.1.1
   shared_preferences: ^2.0.15
   meta: ^1.8.0
   get_it: ^7.2.0
   dartz: ^0.10.1
   equatable: ^2.0.5
-  bloc_test: ^9.1.1
+  flutter_stateful_bloc: ^0.0.6-beta
 
 dev_dependencies:
   flutter_test:

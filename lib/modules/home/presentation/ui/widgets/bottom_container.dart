@@ -1,9 +1,8 @@
 import 'package:ergonomic_office_chair_manager/modules/home/presentation/ui/multi_state_organizer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_stateful_bloc/flutter_stateful_bloc.dart';
 
 import '../../../../../core/utils/app_colors.dart';
-import '../../../../../stateful_bloc/stateful_bloc.dart';
 import '../../../domain/entities/device_entity.dart';
 import '../../blocs/connection_stream_cubit/connection_stream_cubit.dart';
 import '../../blocs/home_animations_cubit/home_animations_cubit.dart';
@@ -17,7 +16,7 @@ class BottomContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final holder = context.read<HomeAnimationsCubit>();
+    final holder = context.readObject<HomeAnimationsCubit>();
     final connectionStatusBannerAnimation =
         holder.connectionStatusBannerAnimation;
 
@@ -61,7 +60,7 @@ class BottomContainerContent extends StatelessWidget {
         return AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
           transitionBuilder: (child, animation) {
-            return child is! RepositoryProvider<List<DeviceEntity>>
+            return child is! ObjectProvider<List<DeviceEntity>>
                 ? ScaleTransition(scale: animation, child: child)
                 : FadeTransition(opacity: animation, child: child);
           },
@@ -73,7 +72,7 @@ class BottomContainerContent extends StatelessWidget {
                       ? const SendHeightWidget()
                       : state == BottomContainerStatesEnum.failedGettingDevices
                           ? const DidNotFindDevicesText()
-                          : RepositoryProvider<List<DeviceEntity>>(
+                          : ObjectProvider<List<DeviceEntity>>(
                               create: (_) => containerState.devices,
                               child: const DevicesListView(),
                             ),

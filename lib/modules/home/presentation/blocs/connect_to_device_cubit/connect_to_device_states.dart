@@ -1,14 +1,19 @@
 part of 'connect_to_device_cubit.dart';
 
-abstract class ConnectToDeviceStates {}
+class ConnectToDeviceInitialState with ConnectToDeviceStates {}
 
-class ConnectToDeviceInitialState extends ConnectToDeviceStates {}
+class ConnectToDeviceLoadingState
+    with ConnectToDeviceStates, BottomContainerStates {
+  @override
+  BottomContainerStatesEnum get state => BottomContainerStatesEnum.loading;
 
-class ConnectToDeviceLoadingState extends ConnectToDeviceStates {}
+  @override
+  List<DeviceEntity> get devices => [];
+}
 
-class ConnectToDeviceSuccessState extends ConnectToDeviceStates {}
+class ConnectToDeviceSuccessState with ConnectToDeviceStates {}
 
-class ConnectToDeviceFailedState extends ConnectToDeviceStates {
+class ConnectToDeviceFailedState with ConnectToDeviceStates {
   final String message;
 
   ConnectToDeviceFailedState({required this.message});

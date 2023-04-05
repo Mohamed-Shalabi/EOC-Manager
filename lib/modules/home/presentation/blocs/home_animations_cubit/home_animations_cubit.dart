@@ -1,11 +1,16 @@
+import 'package:ergonomic_office_chair_manager/modules/home/presentation/ui/multi_state_organizer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomeAnimationsCubit extends Cubit<bool> {
+import '../../../../../stateful_bloc/stateful_bloc.dart';
+import '../state_organizer.dart';
+
+part 'home_animation_states.dart';
+
+class HomeAnimationsCubit extends StatefulCubit<HomeAnimationsStates> {
   HomeAnimationsCubit({
     required this.introductionAnimationController,
     required this.showDevicesAnimationController,
-  }) : super(false) {
+  }) {
     _initAnimations();
   }
 
@@ -16,8 +21,6 @@ class HomeAnimationsCubit extends Cubit<bool> {
   late final Animation<double> selectDeviceButtonAnimation;
   late final Animation<double> connectionStatusBannerAnimation;
   late final Animation<double> showDevicesAnimation;
-
-  var isShowingDevices = false;
 
   void _initAnimations() {
     monitorAnimation = Tween<double>(begin: 0, end: 1).animate(
@@ -67,34 +70,24 @@ class HomeAnimationsCubit extends Cubit<bool> {
     return true;
   }
 
-  Future<void> animateShowDevices() async {
-    if (isShowingDevices) {
-      await _animateShowDevicesBackward();
-      emit(false);
-    } else {
-      await _animateShowDevicesForward();
-      emit(true);
-    }
-  }
+  bool get isShowingDevices => showDevicesAnimationController.value == 1;
 
-  Future<void> _animateShowDevicesForward() async {
-    final shouldAnimate = showDevicesAnimationController.value == 0.0;
-    if (shouldAnimate) {
+  Future<void> animateShowDevicesForward() async {
+    if (!isShowingDevices) {
       await showDevicesAnimationController.forward();
-      isShowingDevices = true;
+      emit(HomeAnimationsShowingDevicesState());
     }
   }
 
-  Future<void> _animateShowDevicesBackward() async {
-    final shouldAnimate = showDevicesAnimationController.value == 1;
-    if (shouldAnimate) {
+  Future<void> animateShowDevicesBackward() async {
+    if (isShowingDevices) {
       await showDevicesAnimationController.reverse();
-      isShowingDevices = false;
+      emit(HomeAnimationsDismissedState());
     }
   }
 
   void animateShowInputForm() {
     showDevicesAnimationController.reverse();
-    isShowingDevices = false;
+    emit(HomeAnimationsShowingInputFormState());
   }
 }

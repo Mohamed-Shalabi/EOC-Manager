@@ -6,8 +6,10 @@ import '../../../../../core/functions/media_query_utils.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../../../../../core/utils/app_text_styles.dart';
+import '../../../../../stateful_bloc/stateful_bloc.dart';
 import '../../blocs/connection_stream_cubit/connection_stream_cubit.dart';
 import '../../blocs/home_animations_cubit/home_animations_cubit.dart';
+import '../../blocs/state_organizer.dart';
 
 class AnimatedConnectionStatusBanner extends StatelessWidget {
   const AnimatedConnectionStatusBanner({Key? key}) : super(key: key);
@@ -43,9 +45,10 @@ class ConnectionStatusWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ConnectionStreamCubit, ConnectionStates>(
-      builder: (BuildContext context, ConnectionStates state) {
-        final isConnected = state is ConnectionConnectedState;
+    return StatefulBlocConsumer<ConnectionBannerStates>(
+      initialState: ConnectionBannerDisconnectedState(),
+      builder: (BuildContext context, ConnectionBannerStates state) {
+        final isConnected = state is ConnectionBannerConnectedState;
 
         return AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),

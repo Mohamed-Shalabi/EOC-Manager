@@ -1,15 +1,20 @@
 part of 'disconnect_device_cubit.dart';
 
-abstract class DisconnectDeviceStates {}
+class DisconnectDeviceInitialState with DisconnectDeviceStates {}
 
-class DisconnectDeviceInitialState extends DisconnectDeviceStates {}
+class DisconnectDeviceLoadingState
+    with DisconnectDeviceStates, BottomContainerStates {
+  @override
+  List<DeviceEntity> get devices => [];
 
-class DisconnectDeviceLoadingState extends DisconnectDeviceStates {}
+  @override
+  BottomContainerStatesEnum get state => BottomContainerStatesEnum.loading;
+}
 
-class DisconnectionFailedState extends DisconnectDeviceStates {
+class DisconnectionFailedState with DisconnectDeviceStates {
   final String message;
 
   DisconnectionFailedState({required this.message});
 }
 
-class DisconnectionSuccessState extends DisconnectDeviceStates {}
+class DisconnectionSuccessState with DisconnectDeviceStates {}

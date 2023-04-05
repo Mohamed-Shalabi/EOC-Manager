@@ -1,19 +1,43 @@
 part of 'get_devices_cubit.dart';
 
-abstract class GetDevicesStates {}
+class GetDevicesIdleState with GetDevicesStates {
+  @override
+  List<DeviceEntity> get devices => [];
 
-class GetDevicesIdleState extends GetDevicesStates {}
-
-class GetDevicesLoadingState extends GetDevicesStates {}
-
-class GetDevicesSuccessState extends GetDevicesStates {
-  final List<DeviceEntity> devices;
-
-  GetDevicesSuccessState({required this.devices});
+  @override
+  BottomContainerStatesEnum get state => BottomContainerStatesEnum.idle;
 }
 
-class GetDevicesFailedState extends GetDevicesStates {
+class GetDevicesLoadingState with GetDevicesStates {
+  @override
+  List<DeviceEntity> get devices => [];
+
+  @override
+  BottomContainerStatesEnum get state => BottomContainerStatesEnum.loading;
+}
+
+class GetDevicesSuccessState with GetDevicesStates {
+  @override
+  List<DeviceEntity> get devices => _devices;
+
+  final List<DeviceEntity> _devices;
+
+  GetDevicesSuccessState({required List<DeviceEntity> devices}) : _devices = devices;
+
+  @override
+  BottomContainerStatesEnum get state =>
+      BottomContainerStatesEnum.succeededGettingDevices;
+}
+
+class GetDevicesFailedState with GetDevicesStates {
+  @override
+  List<DeviceEntity> get devices => [];
+
   final String message;
 
   GetDevicesFailedState({required this.message});
+
+  @override
+  BottomContainerStatesEnum get state =>
+      BottomContainerStatesEnum.failedGettingDevices;
 }

@@ -1,28 +1,24 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../../../../../stateful_bloc/stateful_bloc.dart';
 import '../../../domain/use_cases/connect_to_device_use_case.dart';
+import '../state_organizer.dart';
+import '../../ui/multi_state_organizer.dart';
+import '../../../domain/entities/device_entity.dart';
 
 part 'connect_to_device_states.dart';
 
-class ConnectToDeviceCubit extends Cubit<ConnectToDeviceStates> {
-  ConnectToDeviceCubit({
+class ConnectToDeviceCubit extends StatefulCubit<ConnectToDeviceStates> {
+  const ConnectToDeviceCubit({
     required ConnectToDeviceUseCase connectToDeviceUseCase,
-  })  : _connectToDeviceUseCase = connectToDeviceUseCase,
-        super(ConnectToDeviceInitialState());
+  })  : _connectToDeviceUseCase = connectToDeviceUseCase;
 
   final ConnectToDeviceUseCase _connectToDeviceUseCase;
 
-  var isConnectionLoading = false;
-
   void connectToDevice(String deviceId) async {
-    isConnectionLoading = true;
     emit(ConnectToDeviceLoadingState());
 
     final connectionResult = await _connectToDeviceUseCase(
       ConnectToDeviceUseCaseParameters(deviceId),
     );
-
-    isConnectionLoading = false;
 
     connectionResult.fold<void>(
       (failure) => emit(ConnectToDeviceFailedState(message: failure.message)),

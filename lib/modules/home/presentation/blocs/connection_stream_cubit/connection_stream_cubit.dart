@@ -1,15 +1,15 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ergonomic_office_chair_manager/stateful_bloc/stateful_bloc.dart';
 
 import '../../../domain/use_cases/connection_stream_use_case.dart';
+import '../state_organizer.dart';
+import '../../ui/multi_state_organizer.dart';
 
 part 'connection_stream_states.dart';
 
-class ConnectionStreamCubit extends Cubit<ConnectionStates> {
+class ConnectionStreamCubit extends StatefulCubit<ConnectionBannerStates> {
   ConnectionStreamCubit({
     required ConnectionStreamUseCase connectionStreamUseCase,
-  }) : super(ConnectionInitialState()) {
+  }) {
     _subscribeToConnectionState(connectionStreamUseCase);
   }
 
@@ -21,9 +21,9 @@ class ConnectionStreamCubit extends Cubit<ConnectionStates> {
         final isConnected = connectionStateEntity.isConnected;
 
         if (isConnected) {
-          emit(ConnectionConnectedState());
+          emit(ConnectionBannerConnectedState());
         } else {
-          emit(ConnectionDisconnectedState());
+          emit(ConnectionBannerDisconnectedState());
         }
       },
     );

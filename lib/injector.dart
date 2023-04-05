@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/bluetooth/bluetooth_connector_interface.dart';
-import 'core/bluetooth/flutter_bluetooth_serial_connector.dart';
 import 'core/local/shared_preferences_storage_key_value_saver.dart';
 import 'core/local/storage_key_value_saver.dart';
 import 'modules/home/data/data_sources/bluetooth_data_source.dart';
@@ -60,7 +59,7 @@ abstract class Injector {
     );
 
     _serviceLocator.registerLazySingleton<BluetoothConnectorInterface>(
-      () => FlutterSerialBluetoothConnector(),
+      () => FakeBluetoothConnector(),
     );
 
     // ---------------------- modules ----------------------
@@ -118,31 +117,29 @@ abstract class Injector {
       () => SendHeightUseCase(repository: get()),
     );
 
-    _serviceLocator.registerFactory(
+    _serviceLocator.registerLazySingleton(
       () => ConnectToDeviceCubit(
         connectToDeviceUseCase: get(),
       ),
     );
 
-    _serviceLocator.registerFactory(
-      () => ConnectionStreamCubit(
-        connectionStreamUseCase: get(),
-      ),
+    _serviceLocator.registerSingleton(
+      ConnectionStreamCubit(connectionStreamUseCase: get()),
     );
 
-    _serviceLocator.registerFactory(
+    _serviceLocator.registerLazySingleton(
       () => DisconnectDeviceCubit(
         disconnectDeviceUseCase: get(),
       ),
     );
 
-    _serviceLocator.registerFactory(
+    _serviceLocator.registerLazySingleton(
       () => GetDevicesCubit(
         getDevicesUseCase: get(),
       ),
     );
 
-    _serviceLocator.registerFactory(
+    _serviceLocator.registerLazySingleton(
       () => SendHeightCubit(
         sendHeightUseCase: get(),
         userHeightTextController: TextEditingController(),

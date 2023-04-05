@@ -1,14 +1,21 @@
 part of 'connection_stream_cubit.dart';
 
-@immutable
-abstract class ConnectionStates extends Equatable {
-
+class ConnectionBannerConnectedState with ConnectionBannerStates {
   @override
-  List<Object> get props => [];
+  BottomContainerStatesEnum get state => BottomContainerStatesEnum.connected;
 }
 
-class ConnectionInitialState extends ConnectionStates {}
+class ConnectionBannerDisconnectedState with ConnectionBannerStates {
+  final BottomContainerStates? lastState;
 
-class ConnectionConnectedState extends ConnectionStates {}
+  ConnectionBannerDisconnectedState()
+      : lastState = stateHolder.lastStateOfSuperType(BottomContainerStates)
+            as BottomContainerStates?;
 
-class ConnectionDisconnectedState extends ConnectionStates {}
+  @override
+  BottomContainerStatesEnum get state {
+    return lastState is ConnectionBannerDisconnectedState || lastState == null
+        ? BottomContainerStatesEnum.idle
+        : lastState!.state;
+  }
+}

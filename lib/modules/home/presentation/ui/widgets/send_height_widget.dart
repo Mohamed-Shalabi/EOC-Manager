@@ -1,5 +1,5 @@
+import 'package:ergonomic_office_chair_manager/injector.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/components/my_text.dart';
 import '../../../../../core/functions/media_query_utils.dart';
@@ -33,7 +33,7 @@ class UserHeightForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sendHeightViewModel = context.watch<SendHeightCubit>();
+    final sendHeightViewModel = Injector.get<SendHeightCubit>();
 
     return Form(
       key: sendHeightViewModel.heightFormKey,
@@ -76,7 +76,7 @@ class SendHeightButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sendHeightViewModel = context.read<SendHeightCubit>();
+    final sendHeightViewModel = Injector.get<SendHeightCubit>();
 
     return TextButton(
       onPressed: sendHeightViewModel.sendHeight,

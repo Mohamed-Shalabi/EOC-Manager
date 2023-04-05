@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/components/my_text.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_text_styles.dart';
+import '../../../../../injector.dart';
 import '../../blocs/connect_to_device_cubit/connect_to_device_cubit.dart';
 
 class DevicesListView extends StatelessWidget {
@@ -26,7 +27,7 @@ class DevicesListView extends StatelessWidget {
         final device = devices[index];
         return InkWell(
           onTap: () {
-            context.read<ConnectToDeviceCubit>().connectToDevice(device.id);
+            Injector.get<ConnectToDeviceCubit>().connectToDevice(device.id);
           },
           child: Padding(
             padding: const EdgeInsets.all(8.0),

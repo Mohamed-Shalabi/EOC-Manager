@@ -1,3 +1,4 @@
+import 'package:ergonomic_office_chair_manager/modules/home/presentation/ui/multi_state_organizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -5,10 +6,13 @@ import '../../../../../core/components/my_text.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../../../../../core/utils/app_text_styles.dart';
+import '../../../../../injector.dart';
+import '../../../../../stateful_bloc/stateful_bloc.dart';
 import '../../blocs/connection_stream_cubit/connection_stream_cubit.dart';
 import '../../blocs/disconnect_device_cubit/disconnect_device_cubit.dart';
 import '../../blocs/get_devices_cubit/get_devices_cubit.dart';
 import '../../blocs/home_animations_cubit/home_animations_cubit.dart';
+import '../../blocs/state_organizer.dart';
 
 class AnimatedSelectDeviceButton extends StatelessWidget {
   const AnimatedSelectDeviceButton({Key? key}) : super(key: key);
@@ -39,47 +43,56 @@ class SelectDeviceButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ConnectionStreamCubit, ConnectionStates>(
-      builder: (BuildContext context, ConnectionStates state) {
-        final isConnected = state is ConnectionConnectedState;
+    return StatefulBlocConsumer<MainButtonStates>(
+      initialState: HomeAnimationsDismissedState(),
+      builder: (context, state) {
+        final isShowingDevices =
+            state.mainButtonState == MainButtonStatesEnum.showingDevices;
+        final isConnected =
+            state.mainButtonState == MainButtonStatesEnum.connected;
 
-        return BlocBuilder<HomeAnimationsCubit, bool>(
-          builder: (context, isShowingDevices) => TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: AppColors.purple,
-              shape: const StadiumBorder(),
-            ),
-            onPressed: () async {
-              final animationHolder = context.read<HomeAnimationsCubit>();
-              final disconnectDeviceCubit =
-                  context.read<DisconnectDeviceCubit>();
-              final getDevicesCubit = context.read<GetDevicesCubit>();
+        return TextButton(
+          style: TextButton.styleFrom(
+            backgroundColor: AppColors.purple,
+            shape: const StadiumBorder(),
+          ),
+          onPressed: () async {
+            final animationHolder = context.read<HomeAnimationsCubit>();
+            final disconnectDeviceCubit = Injector.get<DisconnectDeviceCubit>();
+            final getDevicesCubit = Injector.get<GetDevicesCubit>();
 
-              if (isConnected) {
-                await disconnectDeviceCubit.disconnectDevice();
+            if (isConnected) {
+              await disconnectDeviceCubit.disconnectDevice();
+            }
+
+            Future<void> animateShowDevices() async {
+              if (isShowingDevices) {
+                await animationHolder.animateShowDevicesBackward();
+              } else {
+                await animationHolder.animateShowDevicesForward();
               }
+            }
 
-              animationHolder.animateShowDevices().then((_) {
-                if (!isShowingDevices) {
-                  getDevicesCubit.getDevices();
-                } else {
-                  getDevicesCubit.resetState();
-                }
-              });
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 8.0,
-                vertical: 4.0,
-              ),
-              child: MyText(
-                isConnected
-                    ? AppStrings.disconnect
-                    : isShowingDevices
-                        ? AppStrings.dismiss
-                        : AppStrings.selectDevice,
-                style: AppTextStyles.buttonStyle,
-              ),
+            animateShowDevices().then((_) {
+              if (!isShowingDevices) {
+                getDevicesCubit.getDevices();
+              } else {
+                getDevicesCubit.resetState();
+              }
+            });
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 8.0,
+              vertical: 4.0,
+            ),
+            child: MyText(
+              isConnected
+                  ? AppStrings.disconnect
+                  : isShowingDevices
+                      ? AppStrings.dismiss
+                      : AppStrings.selectDevice,
+              style: AppTextStyles.buttonStyle,
             ),
           ),
         );

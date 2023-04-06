@@ -1,6 +1,6 @@
 import 'package:ergonomic_office_chair_manager/modules/home/domain/entities/device_entity.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_stateful_bloc/flutter_stateful_bloc.dart';
 
 import '../../../../../core/components/my_text.dart';
 import '../../../../../core/utils/app_colors.dart';
@@ -13,7 +13,7 @@ class DevicesListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final devices = context.watch<List<DeviceEntity>>();
+    final devices = context.watchObject<List<DeviceEntity>>();
 
     return ListView.separated(
       padding: const EdgeInsets.only(top: 24),

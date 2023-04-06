@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_stateful_bloc/flutter_stateful_bloc.dart';
 
 import '../../../../../core/functions/media_query_utils.dart';
 import '../../../../../core/utils/app_colors.dart';
@@ -10,7 +10,7 @@ class AnimatedMonitorIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final animation = context.read<HomeAnimationsCubit>().monitorAnimation;
+    final animation = context.readObject<HomeAnimationsCubit>().monitorAnimation;
 
     return AnimatedBuilder(
       animation: animation,

@@ -9,7 +9,7 @@ class ConnectionBannerDisconnectedState with ConnectionBannerStates {
   final BottomContainerStates? lastState;
 
   ConnectionBannerDisconnectedState()
-      : lastState = stateHolder.lastStateOfSuperType(BottomContainerStates)
+      : lastState = stateHolder.lastStateOfContextType(BottomContainerStates)
             as BottomContainerStates?;
 
   @override

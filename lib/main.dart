@@ -20,7 +20,7 @@ class ErgonomicOfficeChairApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StatefulBlocProvider(
+    return StatefulProvider(
       app: MaterialApp(
         title: AppStrings.appName,
         debugShowCheckedModeBanner: false,

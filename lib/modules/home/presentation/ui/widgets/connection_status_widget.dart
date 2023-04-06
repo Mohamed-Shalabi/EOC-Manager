@@ -44,7 +44,7 @@ class ConnectionStatusWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StatefulBlocConsumer<ConnectionBannerStates>(
+    return StateConsumer<ConnectionBannerStates>(
       initialState: ConnectionBannerDisconnectedState(),
       builder: (BuildContext context, ConnectionBannerStates state) {
         final isConnected = state is ConnectionBannerConnectedState;

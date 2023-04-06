@@ -51,8 +51,8 @@ class BottomContainerContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StatefulBlocConsumer<BottomContainerStates>(
-      initialState: stateHolder.lastStateOfSuperType(BottomContainerStates)
+    return StateConsumer<BottomContainerStates>(
+      initialState: stateHolder.lastStateOfContextType(BottomContainerStates)
               as BottomContainerStates? ??
           ConnectionBannerDisconnectedState(),
       builder: (context, containerState) {

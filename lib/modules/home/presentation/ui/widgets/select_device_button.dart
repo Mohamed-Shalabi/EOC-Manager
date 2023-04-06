@@ -40,7 +40,7 @@ class SelectDeviceButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StatefulBlocConsumer<MainButtonStates>(
+    return StateConsumer<MainButtonStates>(
       initialState: HomeAnimationsDismissedState(),
       builder: (context, state) {
         final isShowingDevices =

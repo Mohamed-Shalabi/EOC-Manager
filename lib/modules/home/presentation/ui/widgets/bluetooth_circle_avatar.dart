@@ -1,6 +1,6 @@
 import 'package:ergonomic_office_chair_manager/modules/home/presentation/blocs/home_animations_cubit/home_animations_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_stateful_bloc/flutter_stateful_bloc.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 
@@ -10,7 +10,7 @@ class BluetoothCircleAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final animation =
-        context.read<HomeAnimationsCubit>().selectDeviceButtonAnimation;
+        context.readObject<HomeAnimationsCubit>().selectDeviceButtonAnimation;
 
     return AnimatedBuilder(
       animation: animation,

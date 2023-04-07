@@ -20,7 +20,7 @@ dependencies:
   get_it: ^7.2.0
   dartz: ^0.10.1
   equatable: ^2.0.5
-  flutter_stateful_bloc: ^0.1.0-beta
+  flutter_stateful_bloc: ^0.1.1-beta
 
 dev_dependencies:
   flutter_test:

@@ -290,10 +290,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_stateful_bloc
-      sha256: a60dda7b0bbeb2271436a989402e2eba385db39edf0e63a39efe39ef35a9e95f
+      sha256: "92f7a9c2d2dddbd265375898794d7a4406297b2696fcc806d0bcaf47d48436fc"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.0-beta"
+    version: "0.1.1-beta"
   flutter_test:
     dependency: "direct dev"
     description: flutter

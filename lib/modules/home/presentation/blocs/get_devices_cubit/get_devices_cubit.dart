@@ -3,11 +3,10 @@ import 'package:flutter_stateful_bloc/flutter_stateful_bloc.dart';
 import '../../../domain/entities/device_entity.dart';
 import '../../../domain/use_cases/get_devices_use_case.dart';
 import '../state_organizer.dart';
-import '../../ui/multi_state_organizer.dart';
 
 part 'get_devices_states.dart';
 
-class GetDevicesCubit extends StatefulCubit<GetDevicesStates> {
+class GetDevicesCubit extends StatelessCubit<GetDevicesStates> {
   const GetDevicesCubit({
     required GetDevicesUseCase getDevicesUseCase,
   }) : _getDevicesUseCase = getDevicesUseCase;

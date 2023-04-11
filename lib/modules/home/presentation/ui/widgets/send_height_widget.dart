@@ -17,7 +17,7 @@ class SendHeightWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: context.screenHeight * 0.06),
+        SizedBox(height: context.screenHeight * 0.04),
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 32),
           child: UserHeightForm(),

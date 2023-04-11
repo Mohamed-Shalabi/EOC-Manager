@@ -2,11 +2,10 @@ import 'package:flutter_stateful_bloc/flutter_stateful_bloc.dart';
 
 import '../../../domain/use_cases/connection_stream_use_case.dart';
 import '../state_organizer.dart';
-import '../../ui/multi_state_organizer.dart';
 
 part 'connection_stream_states.dart';
 
-class ConnectionStreamCubit extends StatefulCubit<ConnectionBannerStates> {
+class ConnectionStreamCubit extends StatelessCubit<ConnectionBannerStates> {
   ConnectionStreamCubit({
     required ConnectionStreamUseCase connectionStreamUseCase,
   }) {

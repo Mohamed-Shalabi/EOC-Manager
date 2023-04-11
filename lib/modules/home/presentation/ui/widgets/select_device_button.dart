@@ -1,4 +1,3 @@
-import 'package:ergonomic_office_chair_manager/modules/home/presentation/ui/multi_state_organizer.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_stateful_bloc/flutter_stateful_bloc.dart';
@@ -10,6 +9,7 @@ import '../../../../../injector.dart';
 import '../../blocs/disconnect_device_cubit/disconnect_device_cubit.dart';
 import '../../blocs/get_devices_cubit/get_devices_cubit.dart';
 import '../../blocs/home_animations_cubit/home_animations_cubit.dart';
+import '../../blocs/state_organizer.dart';
 
 class AnimatedSelectDeviceButton extends StatelessWidget {
   const AnimatedSelectDeviceButton({Key? key}) : super(key: key);
@@ -40,13 +40,11 @@ class SelectDeviceButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StateConsumer<MainButtonStates>(
+    return StateConsumer<HomeAnimationsStates>(
       initialState: HomeAnimationsDismissedState(),
       builder: (context, state) {
-        final isShowingDevices =
-            state.mainButtonState == MainButtonStatesEnum.showingDevices;
-        final isConnected =
-            state.mainButtonState == MainButtonStatesEnum.connected;
+        final isShowingDevices = state is HomeAnimationsShowingDevicesState;
+        final isConnected = state is HomeAnimationsShowingInputFormState;
 
         return TextButton(
           style: TextButton.styleFrom(

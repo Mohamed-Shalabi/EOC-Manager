@@ -1,4 +1,3 @@
-import 'package:ergonomic_office_chair_manager/modules/home/presentation/ui/multi_state_organizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stateful_bloc/flutter_stateful_bloc.dart';
 
@@ -6,7 +5,7 @@ import '../state_organizer.dart';
 
 part 'home_animation_states.dart';
 
-class HomeAnimationsCubit extends StatefulCubit<HomeAnimationsStates> {
+class HomeAnimationsCubit extends StatelessCubit<HomeAnimationsStates> {
   HomeAnimationsCubit({
     required this.introductionAnimationController,
     required this.showDevicesAnimationController,

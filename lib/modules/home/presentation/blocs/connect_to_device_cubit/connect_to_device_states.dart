@@ -3,12 +3,12 @@ part of 'connect_to_device_cubit.dart';
 class ConnectToDeviceInitialState with ConnectToDeviceStates {}
 
 class ConnectToDeviceLoadingState
-    with ConnectToDeviceStates, BottomContainerStates {
+    with ConnectToDeviceStates, BottomContainerLoadingState {
   @override
-  BottomContainerStatesEnum get state => BottomContainerStatesEnum.loading;
-
-  @override
-  List<DeviceEntity> get devices => [];
+  Set<Type> get parentStates => {
+        ...super.parentStates,
+        BottomContainerLoadingState,
+      };
 }
 
 class ConnectToDeviceSuccessState with ConnectToDeviceStates {}

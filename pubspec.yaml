@@ -20,7 +20,10 @@ dependencies:
   get_it: ^7.2.0
   dartz: ^0.10.1
   equatable: ^2.0.5
-  flutter_stateful_bloc: ^0.1.2-beta
+  flutter_stateful_bloc:
+    git:
+      url: git@github.com:Mohamed-Shalabi/flutter-stateful-bloc.git
+      ref: dev
 
 dev_dependencies:
   flutter_test:

@@ -1,16 +1,7 @@
 part of 'home_animations_cubit.dart';
 
-class HomeAnimationsDismissedState extends HomeAnimationsStates {
-  @override
-  MainButtonStatesEnum get mainButtonState => MainButtonStatesEnum.dismissed;
-}
+class HomeAnimationsDismissedState extends HomeAnimationsStates {}
 
-class HomeAnimationsShowingDevicesState extends HomeAnimationsStates {
-  @override
-  MainButtonStatesEnum get mainButtonState => MainButtonStatesEnum.showingDevices;
-}
+class HomeAnimationsShowingDevicesState extends HomeAnimationsStates {}
 
-class HomeAnimationsShowingInputFormState extends HomeAnimationsStates {
-  @override
-  MainButtonStatesEnum get mainButtonState => MainButtonStatesEnum.connected;
-}
+class HomeAnimationsShowingInputFormState extends HomeAnimationsStates {}

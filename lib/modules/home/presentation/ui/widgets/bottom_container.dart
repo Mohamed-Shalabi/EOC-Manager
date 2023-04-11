@@ -1,4 +1,7 @@
-import 'package:ergonomic_office_chair_manager/modules/home/presentation/ui/multi_state_organizer.dart';
+import 'package:ergonomic_office_chair_manager/modules/home/presentation/blocs/connect_to_device_cubit/connect_to_device_cubit.dart';
+import 'package:ergonomic_office_chair_manager/modules/home/presentation/blocs/disconnect_device_cubit/disconnect_device_cubit.dart';
+import 'package:ergonomic_office_chair_manager/modules/home/presentation/blocs/get_devices_cubit/get_devices_cubit.dart';
+import 'package:ergonomic_office_chair_manager/modules/home/presentation/blocs/state_organizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stateful_bloc/flutter_stateful_bloc.dart';
 
@@ -51,12 +54,27 @@ class BottomContainerContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StateConsumer<BottomContainerStates>(
-      initialState: stateHolder.lastStateOfContextType(BottomContainerStates)
-              as BottomContainerStates? ??
-          ConnectionBannerDisconnectedState(),
-      builder: (context, containerState) {
-        final state = containerState.state;
+    return MixedStateConsumer3<ConnectionBannerStates, GetDevicesStates,
+        BottomContainerLoadingState>(
+      initialState1: ConnectionBannerDisconnectedState(),
+      initialState2: GetDevicesIdleState(),
+      initialState3: BottomContainerLoadingStateInitial(),
+      builder: (
+        context,
+        containerState,
+        _,
+        devicesState,
+        ___,
+      ) {
+        final isLoading = containerState is BottomContainerLoadingState ||
+            containerState is ConnectToDeviceLoadingState ||
+            containerState is DisconnectDeviceLoadingState;
+        final isIdle = containerState is GetDevicesIdleState ||
+            containerState is DisconnectionSuccessState ||
+            containerState is ConnectionBannerDisconnectedState;
+        final isConnected = containerState is ConnectionBannerConnectedState;
+        final failedGettingDevices = containerState is GetDevicesFailedState;
+
         return AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
           transitionBuilder: (child, animation) {
@@ -64,16 +82,20 @@ class BottomContainerContent extends StatelessWidget {
                 ? ScaleTransition(scale: animation, child: child)
                 : FadeTransition(opacity: animation, child: child);
           },
-          child: state == BottomContainerStatesEnum.idle
-              ? const BluetoothCircleAvatar()
-              : state == BottomContainerStatesEnum.loading
-                  ? const Center(child: CircularProgressIndicator(color: AppColors.white))
-                  : state == BottomContainerStatesEnum.connected
+          child: isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(color: AppColors.white),
+                )
+              : isIdle
+                  ? const BluetoothCircleAvatar()
+                  : isConnected
                       ? const SendHeightWidget()
-                      : state == BottomContainerStatesEnum.failedGettingDevices
+                      : failedGettingDevices
                           ? const DidNotFindDevicesText()
                           : ObjectProvider<List<DeviceEntity>>(
-                              create: (_) => containerState.devices,
+                              create: (_) =>
+                                  (devicesState as GetDevicesSuccessState)
+                                      .devices,
                               child: const DevicesListView(),
                             ),
         );

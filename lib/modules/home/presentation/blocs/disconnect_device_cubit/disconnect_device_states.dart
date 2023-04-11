@@ -3,12 +3,12 @@ part of 'disconnect_device_cubit.dart';
 class DisconnectDeviceInitialState with DisconnectDeviceStates {}
 
 class DisconnectDeviceLoadingState
-    with DisconnectDeviceStates, BottomContainerStates {
+    with DisconnectDeviceStates, BottomContainerLoadingState {
   @override
-  List<DeviceEntity> get devices => [];
-
-  @override
-  BottomContainerStatesEnum get state => BottomContainerStatesEnum.loading;
+  Set<Type> get parentStates => {
+        ...super.parentStates,
+        BottomContainerLoadingState,
+      };
 }
 
 class DisconnectionFailedState with DisconnectDeviceStates {

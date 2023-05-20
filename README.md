@@ -1,4 +1,4 @@
-# ergonomic_office_chair_manager
+# Ergonomic Office Chair Manager
 
 A simple application that sends data to the bluetooth module of an embedded microcontroller.
 
@@ -13,7 +13,7 @@ The inputs of the application are:
 - The height of the user in cm. It must be between 165 and 185 cm.
 - The selected bluetooth device.
 
-## Output
+### Output
 
 The application has several outputs:
 
@@ -90,4 +90,4 @@ I love to write the UI in a clean and readable pattern, which is:
 
 DI in the project is not good at all from an abstraction point of view. Although I made injection independent of `get_it`, I forgot to do that also in registering dependenies, which means that changing `get_it` package will be overwhelming!
 
-**_Note:_** I was funny and silly that I implemented this architecture for a single-page application in about 70 files! The main reason for that is that I decided to use vertical slices depending on the use cases. Each use case has its own Cubit and Repository! This helped much when different use cases depend on the same data source but with different implementation. But using this approach made repositories useless because it was possible to implement the use cases in the data layer, not the repositories!
+**_Note:** I was funny and silly that I implemented this architecture for a single-page application in about 70 files! The main reason for that is that I decided to use vertical slices depending on the use cases. Each use case has its own Cubit and Repository! This helped much when different use cases depend on the same data source but with different implementation. But using this approach made repositories useless because it was possible to implement the use cases in the data layer, not the repositories!

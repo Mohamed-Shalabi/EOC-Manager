@@ -52,17 +52,17 @@ I decided to ignore styles configs as it is not much related to the domain layer
 
 **_Bluetooth_**
 
-I made an interface for bluetooth communication to implement it and use packages in implementation. By this, It is guaranteed that the data source component does is independent of the packages used for communication. You can find the interface and implementations in `lib/core/bluetooth/`.
+I made an interface for bluetooth communication to implement it and use packages in implementation. By this, It is guaranteed that the data source component does independent of the packages used for communication. You can find the interface and implementations in `lib/core/bluetooth/`.
 
 **_Error Handling Configs_**
 
-I wrote a simple class called `Failure` to return it in `Either` objects to avoid multi-type exception handling because I need the error messages only from all of the exceptions. I prefered not to throw String objects as I may need to add some other data to the `Failure`s.
+I wrote a simple class called `Failure` to return it in `Either` objects to avoid multi-type exception handling because I need the error messages only from all of the exceptions. I prefered not to throw String objects as I may need to add some other data to the `Failures`.
 
 _Note_: I used `Either` to handle errors, but it adds much boilerplate to the code and I decided to use `try/catch` and throw exceptions for error messaging.
 
 **_Global Functions_**
 
-You may need to use some long statements regularly like `MediaQuery.of(context).size.width`, which is annoying to write it every time. So, in `lib/core/functions/`. These functions shortened navigation, responsive UI, logging, showing sncak bars and decoding and encoding Strings.
+You may need to use some long statements regularly like `MediaQuery.of(context).size.width`, which is annoying to write it every time. So, in `lib/core/functions/`, I made some utility functions. These functions shortened navigation, responsive UI, logging, showing sncak bars and decoding and encoding Strings.
 
 **_Local Storage in Key/Value Pairs_**
 
@@ -90,4 +90,6 @@ I love to write the UI in a clean and readable pattern, which is:
 
 DI in the project is not good at all from an abstraction point of view. Although I made injection independent of `get_it`, I forgot to do that also in registering dependenies, which means that changing `get_it` package will be overwhelming!
 
-**_Note:** I was funny and silly that I implemented this architecture for a single-page application in about 70 files! The main reason for that is that I decided to use vertical slices depending on the use cases. Each use case has its own Cubit and Repository! This helped much when different use cases depend on the same data source but with different implementation. But using this approach made repositories useless because it was possible to implement the use cases in the data layer, not the repositories!
+**Note**
+
+I was funny and silly that I implemented this architecture for a single-page application in about 70 files! The main reason for that is that I decided to use vertical slices depending on the use cases. Each use case has its own Cubit and Repository! This helped much when different use cases depend on the same data source but with different implementation. But using this approach made repositories useless because it was possible to implement the use cases in the data layer, not the repositories!

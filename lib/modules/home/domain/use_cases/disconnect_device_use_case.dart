@@ -1,28 +1,27 @@
 import 'package:dartz/dartz.dart';
+import 'package:ergonomic_office_chair_manager/modules/home/domain/entities/connection_entity.dart';
 
 import '../../../../core/business/use_case.dart';
 import '../../../../core/error/failure.dart';
-import '../repositories/disconnect_device_repository.dart';
 
-class DisconnectDeviceUseCase
-    implements
-        UseCase<Future<Either<Failure, void>>,
-            DisconnectDeviceUseCaseParameters> {
-  final DisconnectDeviceRepository _repository;
+class DisconnectDeviceUseCase extends UseCase<Future<Either<Failure, void>>,
+    DisconnectDeviceUseCaseParameters> {
+  DisconnectDeviceUseCase(this._entity);
 
-  DisconnectDeviceUseCase({
-    required DisconnectDeviceRepository repository,
-  }) : _repository = repository;
+  final ConnectionEntity _entity;
 
   @override
   Future<Either<Failure, void>> call([
-    DisconnectDeviceUseCaseParameters params =
-        const DisconnectDeviceUseCaseParameters(),
-  ]) {
-    return _repository.disconnect();
+    DisconnectDeviceUseCaseParameters? params,
+  ]) async {
+    if (!_entity.isConnected) {
+      return Left(
+        Failure(message: 'You are already disconnected'),
+      );
+    }
+
+    return _entity.disconnectDevice();
   }
 }
 
-class DisconnectDeviceUseCaseParameters extends UseCaseParameters {
-  const DisconnectDeviceUseCaseParameters() : super();
-}
+class DisconnectDeviceUseCaseParameters extends UseCaseParameters {}

@@ -5,9 +5,7 @@ import '../../../../../core/components/my_text.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../../../../../core/utils/app_text_styles.dart';
-import '../../blocs/connection_stream_cubit/connection_stream_cubit.dart';
-import '../../blocs/disconnect_device_cubit/disconnect_device_cubit.dart';
-import '../../blocs/get_devices_cubit/get_devices_cubit.dart';
+import '../../blocs/connection_cubit/connection_cubit.dart';
 import '../../blocs/home_animations_cubit/home_animations_cubit.dart';
 
 class AnimatedSelectDeviceButton extends StatelessWidget {
@@ -39,9 +37,9 @@ class SelectDeviceButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ConnectionStreamCubit, ConnectionStates>(
+    return BlocBuilder<ConnectionCubit, ConnectionStates>(
       builder: (BuildContext context, ConnectionStates state) {
-        final isConnected = state is ConnectionConnectedState;
+        final isConnected = state.isConnected;
 
         return BlocBuilder<HomeAnimationsCubit, bool>(
           builder: (context, isShowingDevices) => TextButton(
@@ -51,19 +49,17 @@ class SelectDeviceButton extends StatelessWidget {
             ),
             onPressed: () async {
               final animationHolder = context.read<HomeAnimationsCubit>();
-              final disconnectDeviceCubit =
-                  context.read<DisconnectDeviceCubit>();
-              final getDevicesCubit = context.read<GetDevicesCubit>();
+              final connectionCubit = context.read<ConnectionCubit>();
 
               if (isConnected) {
-                await disconnectDeviceCubit.disconnectDevice();
+                connectionCubit.disconnect();
               }
 
               animationHolder.animateShowDevices().then((_) {
                 if (!isShowingDevices) {
-                  getDevicesCubit.getDevices();
+                  connectionCubit.getDevices();
                 } else {
-                  getDevicesCubit.resetState();
+                  connectionCubit.resetState();
                 }
               });
             },

@@ -1,30 +1,36 @@
 import 'package:dartz/dartz.dart';
+import 'package:ergonomic_office_chair_manager/modules/home/domain/entities/connection_entity.dart';
 
 import '../../../../core/business/use_case.dart';
 import '../../../../core/error/failure.dart';
-import '../repositories/connect_to_device_repository.dart';
+import '../data_holders/device.dart';
 
-class ConnectToDeviceUseCase
-    implements
-        UseCase<Future<Either<Failure, void>>,
-            ConnectToDeviceUseCaseParameters> {
-  final ConnectToDeviceRepository _repository;
+class ConnectToDeviceUseCase extends UseCase<Future<Either<Failure, Device>>,
+    ConnectToDeviceUseCaseParameters> {
+  ConnectToDeviceUseCase(this._entity);
 
-  ConnectToDeviceUseCase({
-    required ConnectToDeviceRepository repository,
-  }) : _repository = repository;
+  final ConnectionEntity _entity;
 
   @override
-  Future<Either<Failure, void>> call(
+  Future<Either<Failure, Device>> call(
     ConnectToDeviceUseCaseParameters params,
   ) async {
-    final isEnabledResult = await _repository.isEnabled;
-    final isDeviceEnabled = (isEnabledResult).isRight();
-    if (!isDeviceEnabled) {
-      return Left((isEnabledResult as Left<Failure, void>).value);
+    if (_entity.isConnected) {
+      return Left(
+        Failure(
+          message: 'Disconnect the current device before '
+              'trying to connect to another one',
+        ),
+      );
     }
 
-    return _repository.connect(params.deviceId);
+    final bool canConnect = _entity.canConnect(params.deviceId);
+
+    if (!canConnect) {
+      return Left(Failure(message: 'Could not connect to device'));
+    }
+
+    return _entity.connectToDevice(params.deviceId);
   }
 }
 

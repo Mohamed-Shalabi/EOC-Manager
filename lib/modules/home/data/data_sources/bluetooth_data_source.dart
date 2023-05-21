@@ -1,3 +1,5 @@
+import 'package:ergonomic_office_chair_manager/core/error/failure.dart';
+
 import '../../../../core/bluetooth/bluetooth_connector_interface.dart';
 import '../../../../core/bluetooth/bluetooth_device_model.dart';
 
@@ -26,15 +28,15 @@ class BluetoothDataSource {
     return _bluetoothDevices;
   }
 
-  Future<bool> connect(String deviceId) async {
+  Future<BluetoothDeviceModel?> connect(String deviceId) async {
     final bluetoothDevice =
         _bluetoothDevices.firstWhere((element) => element.address == deviceId);
     final isConnected = await _bluetoothConnector.connect(bluetoothDevice);
     if (isConnected) {
       _connectedDevice = bluetoothDevice;
-    }
+    } 
 
-    return isConnected;
+    return _connectedDevice;
   }
 
   String send(int netChairHeight) {
@@ -46,9 +48,10 @@ class BluetoothDataSource {
       netChairHeight = 0;
     }
 
-    final message = netChairHeight < 10 ? '0$netChairHeight' : '$netChairHeight';
+    final message =
+        netChairHeight < 10 ? '0$netChairHeight' : '$netChairHeight';
     _bluetoothConnector.send(message);
-    
+
     return message;
   }
 

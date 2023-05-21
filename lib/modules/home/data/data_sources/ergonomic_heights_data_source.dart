@@ -9,8 +9,26 @@ abstract class ErgonomicHeightsDataSource {
 
   static int get _maxChairHeight => heights.last.chairHeightInCm;
 
-  static bool isInsideRange(int chairHeight) {
+  static bool isChairHeightInsideRange(int chairHeight) {
     return chairHeight >= _minChairHeight && chairHeight <= _maxChairHeight;
+  }
+
+  static bool isUserHeightInsideRange(int userHeight) {
+    return userHeight >= minUserHeight && userHeight <= maxUserHeight;
+  }
+
+  static ErgonomicHeightModel of(int userHeight) {
+    if (!isUserHeightInsideRange(userHeight)) {
+      throw 'Not in range, enter a height between '
+          '${ErgonomicHeightsDataSource.minUserHeight} '
+          'and ${ErgonomicHeightsDataSource.maxUserHeight}';
+    }
+
+    final height = heights.firstWhere(
+      (element) => element.userHeightInCm > userHeight,
+    );
+
+    return height;
   }
 
   static const List<ErgonomicHeightModel> heights = [

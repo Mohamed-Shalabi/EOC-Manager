@@ -52,7 +52,7 @@ class FlutterSerialBluetoothConnector extends BluetoothConnectorInterface {
     try {
       await bluetoothConnector.finish();
       return true;
-    } catch (e, s) {
+    } catch (e) {
       return false;
     }
   }

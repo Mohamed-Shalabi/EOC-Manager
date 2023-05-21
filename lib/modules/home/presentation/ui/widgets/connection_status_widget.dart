@@ -6,7 +6,7 @@ import '../../../../../core/functions/media_query_utils.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../../../../../core/utils/app_text_styles.dart';
-import '../../blocs/connection_stream_cubit/connection_stream_cubit.dart';
+import '../../blocs/connection_cubit/connection_cubit.dart';
 import '../../blocs/home_animations_cubit/home_animations_cubit.dart';
 
 class AnimatedConnectionStatusBanner extends StatelessWidget {
@@ -43,9 +43,9 @@ class ConnectionStatusWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ConnectionStreamCubit, ConnectionStates>(
+    return BlocBuilder<ConnectionCubit, ConnectionStates>(
       builder: (BuildContext context, ConnectionStates state) {
-        final isConnected = state is ConnectionConnectedState;
+        final isConnected = state.isConnected;
 
         return AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),

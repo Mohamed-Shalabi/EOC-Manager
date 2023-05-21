@@ -23,7 +23,7 @@ The application has several outputs:
 
 ## Business
 
-The use cases of the project are:
+The features of the project are:
 
 - Connection state.
 - Connecting and disconnecting devices.
@@ -89,7 +89,3 @@ I love to write the UI in a clean and readable pattern, which is:
 ### Dependeny Injection Framework
 
 DI in the project is not good at all from an abstraction point of view. Although I made injection independent of `get_it`, I forgot to do that also in registering dependenies, which means that changing `get_it` package will be overwhelming!
-
-**Note**
-
-I was funny and silly that I implemented this architecture for a single-page application in about 70 files! The main reason for that is that I decided to use vertical slices depending on the use cases. Each use case has its own Cubit and Repository! This helped much when different use cases depend on the same data source but with different implementation. But using this approach made repositories useless because it was possible to implement the use cases in the data layer, not the repositories!

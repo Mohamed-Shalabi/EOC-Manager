@@ -1,12 +1,12 @@
 import 'dart:math';
 
+import 'package:ergonomic_office_chair_manager/core/functions/show_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/functions/media_query_utils.dart';
 import '../../../../../core/utils/app_strings.dart';
-import '../../blocs/connection_stream_cubit/connection_stream_cubit.dart';
-import '../../blocs/get_devices_cubit/get_devices_cubit.dart';
+import '../../blocs/connection_cubit/connection_cubit.dart';
 import '../../blocs/home_animations_cubit/home_animations_cubit.dart';
 import '../widgets/bottom_container.dart';
 import '../widgets/connection_status_widget.dart';
@@ -46,24 +46,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         introductionAnimationController: introductionAnimationController,
         showDevicesAnimationController: showDevicesAnimationController,
       )..animateIntroduction(),
-      child: Builder(
-        builder: (context) {
-          final animationCubit = context.read<HomeAnimationsCubit>();
+      child: BlocListener<ConnectionCubit, ConnectionStates>(
+        listener: (context, state) {
+          if (state.isConnected) {
+            context.read<HomeAnimationsCubit>().animateShowDevices(true);
+          }
+        },
+        child: Builder(
+          builder: (context) {
+            final animationCubit = context.read<HomeAnimationsCubit>();
 
-          final showDevicesAnimation = animationCubit.showDevicesAnimation;
+            final showDevicesAnimation = animationCubit.showDevicesAnimation;
 
-          return BlocListener<ConnectionStreamCubit, ConnectionStates>(
-            listener: (context, state) {
-              if (state is ConnectionConnectedState) {
-                animationCubit.animateShowInputForm();
-              }
-
-              if (state is ConnectionDisconnectedState) {
-                animationCubit.animateShowDevices();
-                context.read<GetDevicesCubit>().getDevices();
-              }
-            },
-            child: Scaffold(
+            return Scaffold(
               appBar: AppBar(
                 title: const Text(AppStrings.eocManager),
               ),
@@ -100,9 +95,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   ),
                 ],
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

@@ -67,7 +67,8 @@ class HomeAnimationsCubit extends Cubit<bool> {
     return true;
   }
 
-  Future<void> animateShowDevices() async {
+  Future<void> animateShowDevices([bool? isShowingDevices]) async {
+    isShowingDevices ??= this.isShowingDevices;
     if (isShowingDevices) {
       await _animateShowDevicesBackward();
       emit(false);

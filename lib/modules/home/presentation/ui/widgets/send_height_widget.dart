@@ -1,3 +1,4 @@
+import 'package:ergonomic_office_chair_manager/modules/home/presentation/blocs/connection_cubit/connection_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,7 +7,6 @@ import '../../../../../core/functions/media_query_utils.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../../../../../core/utils/app_text_styles.dart';
-import '../../blocs/send_height_cubit/send_height_cubit.dart';
 
 class SendHeightWidget extends StatelessWidget {
   const SendHeightWidget({
@@ -33,12 +33,12 @@ class UserHeightForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sendHeightViewModel = context.watch<SendHeightCubit>();
+    final cubit = context.watch<ConnectionCubit>();
 
     return Form(
-      key: sendHeightViewModel.heightFormKey,
+      key: cubit.heightFormKey,
       child: TextFormField(
-        controller: sendHeightViewModel.userHeightTextController,
+        controller: cubit.userHeightTextController,
         style: AppTextStyles.whiteTitleStyle,
         decoration: InputDecoration(
           hintText: AppStrings.heightFieldHintMessage,
@@ -65,7 +65,14 @@ class UserHeightForm extends StatelessWidget {
           ),
           errorStyle: AppTextStyles.whiteSubTitleStyle,
         ),
-        validator: sendHeightViewModel.validateHeightInput,
+        validator: (value) {
+          final intValue = int.tryParse(value?.trim() ?? '');
+          if (intValue == null) {
+            return 'enter your height';
+          }
+
+          return null;
+        },
       ),
     );
   }
@@ -76,10 +83,10 @@ class SendHeightButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sendHeightViewModel = context.read<SendHeightCubit>();
+    final cubit = context.read<ConnectionCubit>();
 
     return TextButton(
-      onPressed: sendHeightViewModel.sendHeight,
+      onPressed: () => cubit.sendHeight(),
       child: const MyText(
         AppStrings.send,
         style: AppTextStyles.buttonStyle,
